@@ -4,6 +4,7 @@ class GameBoard{
         Hvert felt skal have en atribut
         Get og set metoder
         Hvordan skal det interegere med players?
+        Størrelsen på boardet skal justeres til at håndtere 4 spillere
      */
 
     private char[] board;
@@ -23,6 +24,9 @@ class GameBoard{
 
         //Player starts here
         board[0] = 'P';
+
+        //Field attributes
+
     }
 
     public String toString(){
