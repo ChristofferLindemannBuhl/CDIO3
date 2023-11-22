@@ -36,6 +36,19 @@ public class Game {
     }
 
     private void initializePlayers() {
+
+        while (true) {
+            print("Enter the number of players (2-4): ");
+            Dicegame.noOfPlayers = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+            
+            if (Dicegame.noOfPlayers >= 2 && Dicegame.noOfPlayers <= 4) {
+                break; // Break out of the loop if the number of players is valid
+            } else {
+                print("Invalid number of players. Please enter a number between 2 and 4.\n");
+            }
+        }
+
         players = new Player[Dicegame.noOfPlayers];
         for (int i = 0; i < Dicegame.noOfPlayers; i++) {
             print("Please enter the name for Player " + (i + 1) + ".");
