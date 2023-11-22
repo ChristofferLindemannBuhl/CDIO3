@@ -5,11 +5,12 @@ public class Game {
     static boolean runTheTest = false;
 
     Field[] fields;
-
+    GameBoard board;
     Player[] players;
     private int playerTurn;
     Player currentPlayer;
 
+    
     public Game() {
         scanner = new java.util.Scanner(System.in);
         String input = scanner.nextLine();
@@ -30,8 +31,7 @@ public class Game {
     public void initializeGame() {
         // runTest();
         initializePlayers();
-        initializeFields();
-
+        board = new GameBoard();
         startGame();
     }
 
@@ -57,9 +57,6 @@ public class Game {
         }
     }
 
-    private void initializeFields() {
-        fields = Field.initializeFields();
-    }
 
     private void startGame() {
         takePlayerTurn();
@@ -75,39 +72,16 @@ public class Game {
         // Der er nu blevet rullet med terninger.
 
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
-        fieldLogic(); // Vi kører logikken for, hvad der sker på det felt spilleren har landet på.
-        playerStats(); // Vi viser spillerens nuværende penge.
+        
+        board.movePlayer(currentPlayer.getSumOfDice()); //Rykker spilleren 
 
-        nextPlayerTurn(); // Gå videre til næste persons tur.
+        print(board.toString());    //Printer boardet
+
+        playerStats();  //Printer spillers penge osv
+
+        nextPlayerTurn();   //Næste spillers tur
     }
 
-    private void fieldLogic() {
-        for (Field field : fields) {
-            if (field.getSpace() == currentPlayer.getSumOfDice()) { // Hvis dette er sandt, så har spilleren landet på
-                                                                    // dette felt.
-                                                                    // Print hvad feltet har som beskrivelse
-                print("You landed on " + field.getName());
-                print(field.getLandingDescription());
-                // Påfør ændring i spillers penge, alt efter hvilken effekt feltet har, angivet
-                // i initialiseringen af feltet i Field.java.
-                switch (field.getFieldEffect()) {
-                    case neutral:
-                        break;
-                    case positive:
-                        currentPlayer.wallet().addMoney(field.getValue());
-                        break;
-                    case negative:
-                        currentPlayer.wallet().substractMoney(field.getValue());
-                        print("You lost " + field.getValue() + " money =(\n");
-                        break;
-                }
-                // Hvis vi fandt feltet, som spilleren landede på, så retunerer vi ud af
-                // fieldLogic(). Ellers bliver fejlbeskeden nedenfor vist.
-                return;
-            }
-        }
-        throw new Error("Kunne ikke finde feltet: '" + currentPlayer.getSumOfDice() + "'.");
-    }
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt
     // meget mere på.
@@ -142,12 +116,8 @@ public class Game {
     }
 
     private void nextPlayerTurn() {
-        // Forbliver på samme playerTurn, hvis spiller har bonustur, eller plus med 1,
-        // så det bliver den næstes tur.
-        if (playerGetsBonusTurn())
-            print("You got an extra turn =)");
-        else
-            incrementPlayerTurn();
+        
+        incrementPlayerTurn();
         // Næste tur starter
         takePlayerTurn();
     }
@@ -160,14 +130,6 @@ public class Game {
             playerTurn = 0;
     }
 
-    private boolean playerGetsBonusTurn() {
-        for (Field field : fields) {
-            if (field.getSpace() == currentPlayer.getSumOfDice()) {
-                return field.grantsBonusTurn();
-            }
-        }
-        throw new Error("Kunne ikke finde feltet: '" + currentPlayer.getSumOfDice() + "'.");
-    }
 
     private void playerWon() {
         print(currentPlayer.getPlayerName() + " won! You got the required amount of money to win!");
