@@ -9,9 +9,11 @@ class GameBoard{
     private char[][] board;
     private int fields = 24; // Set the actual size of the board
     private int dimension = 7;
-    private int players = Dicegame.noOfPlayers;
+    private int players;
+    private int currentPlayerTurn = 0;
 
     public GameBoard() {
+        this.players = Dicegame.noOfPlayers;
         this.board = new char[fields][players];
         initializeBoard();
     }
@@ -25,16 +27,15 @@ class GameBoard{
         }
 
         //Player starts here
-         board[0][0] = 'P';
-        board[0][1] = 'Q';
-        board[0][2] = 'R';
-        board[0][3] = 'S';
+        for (int j = 0; j < players; j++) {
+            board[0][j] = getPlayerSymbol(j);
+        }
 
         //Field attributes
 
     }
 
-    public String toString(){
+    /*public String toString(){
         String board = "";
 
         //Adding top outline with corners
@@ -77,30 +78,64 @@ class GameBoard{
         board += "X";
         
         return board;
-    }
+    }*/
     
     public void movePlayer(int moves) {
-        // Finds player
+        // Find current player's index
         int currentPlayerIndex = findPlayer();
     
         // Move player
         int nextPlayerIndex = (currentPlayerIndex + moves) % fields;
     
         // Make previous spot empty
-        board[currentPlayerIndex] = ' ';
-        // Place player in the new spot
-        board[nextPlayerIndex] = 'P';
+        board[currentPlayerIndex][currentPlayerTurn] = ' ';
+    
+        // Determine the symbol based on the player's turn
+        char playerSymbol = getPlayerSymbol(currentPlayerTurn);
+    
+        // Place player in the new spot with the correct symbol
+        board[nextPlayerIndex][currentPlayerTurn] = playerSymbol;
+    
+        // Update the player turn
+        playerTurn();
     }
     
     private int findPlayer() {
         // Find player's current position/index on the board
+        char playerSymbol = getPlayerSymbol(currentPlayerTurn);
+
         for (int i = 0; i < fields; i++) {
-            if (board[i] == 'P') {
-                return i;
+            for (int j = 0; j < players; j++) {
+                if (board[i][j] == playerSymbol) {
+                    return i;
+                }
             }
         }
         return -1; // Player not found
     }
+
+    private void playerTurn(){
+         // Increment the turn for the current player
+         this.currentPlayerTurn++;
+
+         // If the turn exceeds the number of players, reset it to 1 (loop back to the first player)
+         if (this.currentPlayerTurn > this.players) {
+             this.currentPlayerTurn = 1;
+         }
+     
+    }
+
+    private char getPlayerSymbol(int playerIndex) {
+        char[] playerSymbols = {'P', 'Q', 'R', 'S'};
+
+        if (playerIndex < playerSymbols.length) {
+            return playerSymbols[playerIndex];
+        } else {
+            // Handle the case when there are more players than symbols (add more symbols or handle differently)
+            throw new IllegalArgumentException("Not enough symbols for players");
+        }
+    }
+
 
 }
 
