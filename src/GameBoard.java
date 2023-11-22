@@ -2,28 +2,33 @@ class GameBoard{
 
     /* Checkliste:
         Hvert felt skal have en atribut
-        Get og set metoder
-        Hvordan skal det interegere med players?
+        Get og set metoder? (kravspecifikationen)
         Størrelsen på boardet skal justeres til at håndtere 4 spillere
      */
 
-    private char[] board;
+    private char[][] board;
     private int fields = 24; // Set the actual size of the board
     private int dimension = 7;
+    private int players = Dicegame.noOfPlayers;
 
     public GameBoard() {
-        this.board = new char[fields];
+        this.board = new char[fields][players];
         initializeBoard();
     }
 
     private void initializeBoard() {
         // Sætter alle felterne tomme
         for (int i = 0; i < fields; i++) {
-            board[i] = ' ';
+            for (int j = 0; j < players; j++) {
+                board[i][j] = ' ';
+            }
         }
 
         //Player starts here
-        board[0] = 'P';
+         board[0][0] = 'P';
+        board[0][1] = 'Q';
+        board[0][2] = 'R';
+        board[0][3] = 'S';
 
         //Field attributes
 
