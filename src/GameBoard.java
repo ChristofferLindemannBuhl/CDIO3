@@ -97,16 +97,5 @@ class GameBoard{
         return -1; // Player not found
     }
 
-
-
-
-    public static void main(String[] args) {
-        
-        var board = new GameBoard();
-
-        System.out.println(board.toString());
-        board.movePlayer(3);
-        System.out.println(board.toString());
-    }
 }
 
