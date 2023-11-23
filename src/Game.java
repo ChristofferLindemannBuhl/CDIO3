@@ -92,13 +92,6 @@ public class Game {
 
         playerStats();  //Printer spillers penge osv
 
-
-        //Test
-        chancen.drawChancenCard();
-        print(board.toString());    //Printer boardet
-        playerStats();  //Printer spillers penge osv
-        //Test end
-
         nextPlayerTurn();   //Næste spillers tur
     }
 
