@@ -87,13 +87,14 @@ public class Game {
         if (currentPlayer.isInJail()) {
             // Spilleren er i fængsel
             print(currentPlayer.getName() + " is in jail for " + currentPlayer.getTurnsLeftInJail() + " more turn(s). Skipping player...");
+
         } else {
             // Der bliver holdt styr på, hvis tur det er, i variablen playerTurn.
             print("Type 'r' to roll the dice.");
             waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
             // Der er nu blevet rullet med terninger.
             showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
-            currentPlayer.move(currentPlayer.getSumOfDice());
+            currentPlayer.move(currentPlayer.getSumOfDice());               
             playerStats(); //Printer spillers penge osv
             if (checkGameEndingConditions()) { // Hvis
                 playerWonMessage();
