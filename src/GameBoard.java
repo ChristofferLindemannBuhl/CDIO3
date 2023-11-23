@@ -303,7 +303,7 @@ class GameBoard{
     
 
     private char getPlayerSymbol(int playerIndex) {
-        char[] playerSymbols = {'A', 'B', 'C', 'D'};
+        char[] playerSymbols = {'1', '2', '3', '4'};
         return playerSymbols[playerIndex];
     }
 
