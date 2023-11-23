@@ -2,11 +2,12 @@ public class Game {
     java.util.Scanner scanner;
     static boolean runTheTest = false;
 
-    Field[] fields;
     GameBoard board;
-    Player[] players;
+    public static GameBoard board;
+    static Player[] players;
     private int playerTurn;
-    Player currentPlayer;
+    static Player currentPlayer;
+
 
     public Game() {
         scanner = new java.util.Scanner(System.in);
@@ -33,9 +34,6 @@ public class Game {
     }
 
     private void initializePlayers() {
-        
-        
-        
         while (true) {
             print("\nEnter the number of players (2-4):\n");
             scanner = new java.util.Scanner(System.in);
@@ -94,15 +92,23 @@ public class Game {
 
         // Der er nu blevet rullet med terninger.
 
+        currentPlayer.move(currentPlayer.getSumOfDice());
+
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
+        
+        board.updatePlayerPositions(players); // Opdatér board-interface
+      
+        print(board.toString()); //Printer boardet
 
-        board.movePlayer(currentPlayer); // Rykker spilleren
+        board.runFieldLogic(currentPlayer); // Kør logikken for det felt spilleren landede på
 
-        print(board.toString()); // Printer boardet
+        playerStats(); //Printer spillers penge osv
 
-        playerStats(); // Printer spillers penge osv
+        if (checkGameEndingConditions()) { // Hvis
+            playerWonMessage();
+        }
 
-        nextPlayerTurn(); // Næste spillers tur
+        nextPlayerTurn(); //Næste spillers tur
     }
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt
@@ -131,15 +137,24 @@ public class Game {
 
     private void playerStats() {
         // Vis spillerens stats
-        print(currentPlayer.getPlayerName() + ", you now have " + currentPlayer.wallet().getMoney()
-                + " money.");
+        /*
+        print(currentPlayer.getPlayerName() + ", you now have " + currentPlayer.wallet().getMoney() + " money.");
+        */
+    }
+
+    private boolean checkGameEndingConditions() {
         // Check om spilleren har vundet
+        boolean playerWon = false;
+
+        /*
         if (currentPlayer.checkForMoneyToWin())
-            playerWon();
+            playerWon = true;
+        */
+
+        return playerWon;
     }
 
     private void nextPlayerTurn() {
-
         incrementPlayerTurn();
         // Næste tur starter
         takePlayerTurn();
@@ -153,7 +168,7 @@ public class Game {
             playerTurn = 0;
     }
 
-    private void playerWon() {
+    private void playerWonMessage() {
         print(currentPlayer.getPlayerName() + " won! You got the required amount of money to win!");
         EndMessage();
     }
@@ -177,6 +192,15 @@ public class Game {
             EndMessage();
         }
     }
+
+    public static Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
+    public static Player[] getPlayers(){
+        return players;
+    }
+
     // #endregion
 
     public void runTest() {

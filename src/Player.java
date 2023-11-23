@@ -60,6 +60,18 @@ public class Player {
     public void setPosition(int newPosition) {
         position = newPosition;
     }
+    public void move(int amountToMove) {
+        int oldPlayerPosition = position;
+        // Ny position
+        int newPlayerPosition = (oldPlayerPosition + amountToMove) % Dicegame.NO_OF_FIELDS;
+        // Placér spilleren på den nye position
+        setPosition(newPlayerPosition);
+
+        // Tjek om spilleren passerede start
+        if (oldPlayerPosition + amountToMove >= Dicegame.NO_OF_FIELDS) {
+            // SPILLEREN PASSEREDE START - INDFØR LOGIK FOR AT PASSERE START
+        }
+    }
     public int getID() {
         return playerID;
     }

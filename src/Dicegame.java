@@ -6,7 +6,8 @@ public class Dicegame {
     static int NO_OF_DICE = 2;
     static int START_MONEY = 20;
     static int MONEY_TO_WIN = 3000;
-    static int NO_OF_FIELDS = 11;
+    static int NO_OF_FIELDS = 24;
+    static int BOARD_WIDTH = 7;
 
     public static void main(String[] args) {
         System.out.print("\nWELCOME TO THE NEW GAME \n\nType 's' to start or 'q' to quit\n");
