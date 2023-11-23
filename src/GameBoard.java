@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class GameBoard{
 
     /* Checkliste:
@@ -7,17 +10,16 @@ class GameBoard{
      */
 
     private char[][] board;
-    private int fields = 24; // Set the actual size of the board
-    private int dimension = 7;
+    private List<Field> fieldList = new ArrayList<>();
 
     public GameBoard() {
-        this.board = new char[fields][Dicegame.NO_OF_PLAYERS];
+        this.board = new char[Dicegame.NO_OF_FIELDS][Dicegame.NO_OF_PLAYERS];
         initializeBoard();
     }
 
     private void initializeBoard() {
         // Sætter alle felterne tomme
-        for (int i = 0; i < fields; i++) {
+        for (int i = 0; i < Dicegame.NO_OF_FIELDS; i++) {
             for (int j = 0; j < Dicegame.NO_OF_PLAYERS; j++) {
                 board[i][j] = ' ';
             }
@@ -27,7 +29,54 @@ class GameBoard{
             board[0][j] = getPlayerSymbol(j);
         }
         //Field attributes
-
+        int spaceIndex = 0;
+        fieldList.add(new StartField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Burgerbaren", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Pizzeriaet", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new ChanceField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Slikbutikken", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Iskiosken", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new JailField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Museet", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Biblioteket", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new ChanceField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Skaterparken", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Swimmingpoolen", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new ParkingField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Spillehallen", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Biografen", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new ChanceField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Legetøjsbutikken", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Dyrehandlen", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new GoToJailField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Bowlinghallen", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Zoologisk Have", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new ChanceField(spaceIndex));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Vandlandet", 0, 0, 0));
+        spaceIndex++;
+        fieldList.add(new BuyableField(spaceIndex, "Strandpromenaden", 0, 0, 0));
     }
 
     public String toString(){
@@ -37,20 +86,20 @@ class GameBoard{
             case 2:
                 //Adding top outline with corners
                 boardInterfaceString += 'X';
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X\n";
                 
                 // Adds first top row
                 boardInterfaceString += '|';
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
                 }
 
                 // Adds Second top row
                 boardInterfaceString += "\n|";
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += " " + "" + " " + "|";
                 }
 
@@ -94,7 +143,7 @@ class GameBoard{
 
                 //Adding bottom outline with corners
                 boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X";
@@ -104,20 +153,20 @@ class GameBoard{
 
                 //Adding top outline with corners
                 boardInterfaceString += 'X';
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X\n";
                 
                 // Adds first top row
                 boardInterfaceString += '|';
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
                 }
 
                 // Adds Second top row
                 boardInterfaceString += "\n|";
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += this.board[i][2] + "" + " " + "|";
                 }
 
@@ -161,7 +210,7 @@ class GameBoard{
 
                 //Adding bottom outline with corners
                 boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X";
@@ -171,20 +220,20 @@ class GameBoard{
 
                 //Adding top outline with corners
                 boardInterfaceString += 'X';
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X\n";
                 
                 // Adds first top row
                 boardInterfaceString += '|';
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
                 }
 
                 // Adds Second top row
                 boardInterfaceString += "\n|";
-                for (int i = 0; i < dimension; i++) {
+                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
                     boardInterfaceString += this.board[i][2] + "" + this.board[i][3] + "|";
                 }
 
@@ -228,7 +277,7 @@ class GameBoard{
 
                 //Adding bottom outline with corners
                 boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*dimension - 1; i++){
+                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X";
@@ -242,22 +291,29 @@ class GameBoard{
         return boardInterfaceString;
     }
 
-    //Currently have a bug where the players can only move 1 turn.
-    public void movePlayer(Player player, int amountToMove) {
-        // Move player
-        int newPlayerPosition = (player.getPosition() + amountToMove) % fields;
 
-        // Make previous spot empty
-        board[player.getPosition()][player.getID()] = ' ';
-    
-        // Determine the symbol based on the player's turn
-        char playerSymbol = getPlayerSymbol(player.getID());
-    
-        // Place player in the new spot with the correct symbol
-        board[newPlayerPosition][player.getID()] = playerSymbol;
-
-        player.setPosition(newPlayerPosition);
+    public void updatePlayerPositions(Player[] players) {
+        // Nulstil board
+        for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
+            for (int f = 0; f < Dicegame.NO_OF_FIELDS; f++) {
+                board[f][p] = ' '; // Symbolet er spillerens ID konverteret til en char
+            }
+        }
+        // Indsæt spiller-positioner
+        for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
+            board[players[p].getPosition()][p] = (char)((players[p].getID() + 1) + '0'); // Symbolet er spillerens ID konverteret til en char
+        }
     }
+
+    public void runFieldLogic(Player currentPlayer) {
+        // Kør logikken for det felt spilleren landede på
+        for (Field field : fieldList) {
+            if (field.getSpace() == currentPlayer.getPosition()) {
+                field.landingLogic(currentPlayer);
+            }
+        }
+    }
+  
 
     private char getPlayerSymbol(int playerIndex) {
         char[] playerSymbols = {'1', '2', '3', '4'};

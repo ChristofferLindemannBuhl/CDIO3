@@ -4,14 +4,13 @@ public class Game {
     java.util.Scanner scanner;
     static boolean runTheTest = false;
 
-    Field[] fields;
+    GameBoard board;
     public static GameBoard board;
     static Player[] players;
     private int playerTurn;
     static Player currentPlayer;
-    Chancen chancen = new Chancen();
 
-    
+
     public Game() {
         scanner = new java.util.Scanner(System.in);
         String input = scanner.nextLine();
@@ -37,7 +36,6 @@ public class Game {
     }
 
     private void initializePlayers() {
-
         while (true) {
             print("Enter the number of players (2-4): ");
             Dicegame.NO_OF_PLAYERS = scanner.nextInt();
@@ -83,18 +81,24 @@ public class Game {
 
         // Der er nu blevet rullet med terninger.
 
+        currentPlayer.move(currentPlayer.getSumOfDice());
+
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         
-        board.movePlayer(currentPlayer, currentPlayer.getSumOfDice()); //Rykker spilleren
+        board.updatePlayerPositions(players); // Opdatér board-interface
+      
+        print(board.toString()); //Printer boardet
 
+        board.runFieldLogic(currentPlayer); // Kør logikken for det felt spilleren landede på
 
-        print(board.toString());    //Printer boardet
+        playerStats(); //Printer spillers penge osv
 
-        playerStats();  //Printer spillers penge osv
+        if (checkGameEndingConditions()) { // Hvis
+            playerWonMessage();
+        }
 
-        nextPlayerTurn();   //Næste spillers tur
+        nextPlayerTurn(); //Næste spillers tur
     }
-
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt
     // meget mere på.
@@ -121,15 +125,24 @@ public class Game {
 
     private void playerStats() {
         // Vis spillerens stats
-        print(currentPlayer.getPlayerName() + ", you now have " + currentPlayer.wallet().getMoney()
-                + " money.");
+        /*
+        print(currentPlayer.getPlayerName() + ", you now have " + currentPlayer.wallet().getMoney() + " money.");
+        */
+    }
+
+    private boolean checkGameEndingConditions() {
         // Check om spilleren har vundet
+        boolean playerWon = false;
+
+        /*
         if (currentPlayer.checkForMoneyToWin())
-            playerWon();
+            playerWon = true;
+        */
+
+        return playerWon;
     }
 
     private void nextPlayerTurn() {
-        
         incrementPlayerTurn();
         // Næste tur starter
         takePlayerTurn();
@@ -144,7 +157,7 @@ public class Game {
     }
 
 
-    private void playerWon() {
+    private void playerWonMessage() {
         print(currentPlayer.getPlayerName() + " won! You got the required amount of money to win!");
         EndMessage();
     }
