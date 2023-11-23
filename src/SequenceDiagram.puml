@@ -1,0 +1,58 @@
+@startuml
+
+actor Player
+
+participant Game
+participant PlayerInstance
+participant GameBoard
+participant Scanner
+
+Player -> Game: startGame()
+
+activate Game
+Game -> Game: initializeGame()
+
+activate PlayerInstance
+Game -> PlayerInstance: initializePlayers()
+
+PlayerInstance -> Scanner: enter number of players
+
+activate Scanner
+Scanner --> PlayerInstance: user input
+
+PlayerInstance -> PlayerInstance: validate input
+PlayerInstance --> Scanner: request confirmation
+
+Scanner --> PlayerInstance: user confirmation
+
+PlayerInstance -> PlayerInstance: set number of players
+PlayerInstance -> PlayerInstance: initialize players
+
+PlayerInstance -> GameBoard: create GameBoard
+
+PlayerInstance -> Game: startGame()
+
+activate PlayerInstance
+Game -> PlayerInstance: takePlayerTurn()
+
+PlayerInstance -> Player: waitForRollInput()
+
+activate Scanner
+Scanner --> Player: user input
+
+Player -> Player: rollDice()
+
+Player -> Player: move()
+
+Player -> Player: playerStats()
+
+Player -> Player: checkGameEndingConditions()
+
+Player -> Player: nextPlayerTurn()
+
+deactivate PlayerInstance
+deactivate Player
+deactivate Scanner
+deactivate Game
+
+@enduml
