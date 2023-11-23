@@ -39,21 +39,20 @@ public class Game {
 
         while (true) {
             print("Enter the number of players (2-4): ");
-            Dicegame.noOfPlayers = scanner.nextInt();
+            Dicegame.NO_OF_PLAYERS = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
             
-            if (Dicegame.noOfPlayers >= 2 && Dicegame.noOfPlayers <= 4) {
+            if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
                 break; // Break out of the loop if the number of players is valid
             } else {
                 print("Invalid number of players. Please enter a number between 2 and 4.\n");
             }
         }
 
-        players = new Player[Dicegame.noOfPlayers];
-        for (int i = 0; i < Dicegame.noOfPlayers; i++) {
+        players = new Player[Dicegame.NO_OF_PLAYERS];
+        for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
             print("Please enter the name for Player " + (i + 1) + ".");
-            players[i] = new Player(scanner.nextLine());
-
+            players[i] = new Player(scanner.nextLine(), i);
         }
     }
 
@@ -73,7 +72,7 @@ public class Game {
 
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         
-        board.movePlayer(currentPlayer.getSumOfDice()); //Rykker spilleren 
+        board.movePlayer(currentPlayer); //Rykker spilleren
 
         print(board.toString());    //Printer boardet
 
@@ -97,7 +96,7 @@ public class Game {
 
     private void showPlayerRoll() {
         String diceValuesString = new String();
-        for (int i = 0; i < Dicegame.noOfDice; i++) {
+        for (int i = 0; i < Dicegame.NO_OF_DICE; i++) {
             if (i > 0)
                 diceValuesString += "\n";
             diceValuesString += "Dice " + (i + 1) + ": " + currentPlayer.getDieValue(i);
@@ -126,7 +125,7 @@ public class Game {
         playerTurn++;
         // Hvis playerTurn er større end antallet af spillere, så gå tilbage til
         // spilleren på plads 0.
-        if (playerTurn >= Dicegame.noOfPlayers)
+        if (playerTurn >= Dicegame.NO_OF_PLAYERS)
             playerTurn = 0;
     }
 
