@@ -291,6 +291,7 @@ class GameBoard{
         return boardInterfaceString;
     }
 
+
     public void updatePlayerPositions(Player[] players) {
         // Nulstil board
         for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
@@ -312,6 +313,7 @@ class GameBoard{
             }
         }
     }
+  
 
     private char getPlayerSymbol(int playerIndex) {
         char[] playerSymbols = {'1', '2', '3', '4'};

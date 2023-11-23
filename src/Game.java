@@ -5,9 +5,11 @@ public class Game {
     static boolean runTheTest = false;
 
     GameBoard board;
-    Player[] players;
+    public static GameBoard board;
+    static Player[] players;
     private int playerTurn;
-    Player currentPlayer;
+    static Player currentPlayer;
+
 
     public Game() {
         scanner = new java.util.Scanner(System.in);
@@ -45,6 +47,18 @@ public class Game {
                 print("Invalid number of players. Please enter a number between 2 and 4.\n");
             }
         }
+        switch (Dicegame.NO_OF_PLAYERS) {
+            case 2:
+                Dicegame.START_MONEY = 20;
+                break;
+            case 3:
+                Dicegame.START_MONEY = 18;
+                break;
+
+            case 4:
+                Dicegame.START_MONEY = 16;
+                break;
+        }
 
         players = new Player[Dicegame.NO_OF_PLAYERS];
         for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
@@ -72,7 +86,7 @@ public class Game {
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         
         board.updatePlayerPositions(players); // Opdatér board-interface
-
+      
         print(board.toString()); //Printer boardet
 
         board.runFieldLogic(currentPlayer); // Kør logikken for det felt spilleren landede på
@@ -167,6 +181,15 @@ public class Game {
             EndMessage();
         }
     }
+
+    public static Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
+    public static Player[] getPlayers(){
+        return players;
+    }
+
     // #endregion
 
     public void runTest() {

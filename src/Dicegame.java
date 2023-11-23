@@ -4,7 +4,7 @@ public class Dicegame {
     static Game game;
     static int NO_OF_PLAYERS = 2;
     static int NO_OF_DICE = 2;
-    static int START_MONEY = 1000;
+    static int START_MONEY = 20;
     static int MONEY_TO_WIN = 3000;
     static int NO_OF_FIELDS = 24;
     static int BOARD_WIDTH = 7;
