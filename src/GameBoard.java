@@ -35,50 +35,74 @@ class GameBoard{
 
     }
 
-    /*public String toString(){
+    public String toString(){
         String board = "";
 
         //Adding top outline with corners
         board += 'X';
-        for(int i = 0; i < 2*dimension - 1; i++){
+        for(int i = 0; i < 3*dimension - 1; i++){
             board += '-';
         }
         board += "X\n";
         
-        // Adds top row
+        // Adds first top row
         board += '|';
         for (int i = 0; i < dimension; i++) {
-            board += this.board[i] + "|";
+            board += this.board[i][0] + "" + this.board[i][1] + "|";
+        }
+
+        // Adds Second top row
+        board += "\n|";
+        for (int i = 0; i < dimension; i++) {
+            board += this.board[i][2] + "" + this.board[i][3] + "|";
         }
 
         //Adding the middle line by line
-        board += "\n|-x---------x-|";
-        board += "\n|" + this.board[23] + "|         |" + this.board[7] + "|";
-        board += "\n|-|         |-|";
-        board += "\n|" + this.board[22] + "|         |" + this.board[8] + "|";
-        board += "\n|-|         |-|";
-        board += "\n|" + this.board[21] + "|         |" + this.board[9] + "|";
-        board += "\n|-|         |-|";
-        board += "\n|" + this.board[20] + "|         |" + this.board[10] + "|";
-        board += "\n|-|         |-|";
-        board += "\n|" + this.board[19] + "|         |" + this.board[11] + "|";
-        board += "\n|-x---------x-|\n";
+        board += "\n|--x--------------x--|";
 
-        // Adds bottom row
-        board += '|';
+        board += "\n|" + this.board[23][0] + "" + this.board[23][1] + "|              |" + this.board[7][0] + "" + this.board[7][1] + "|";
+        board += "\n|" + this.board[23][2] + "" + this.board[23][3] + "|              |" + this.board[7][2] + "" + this.board[7][3] + "|";
+        board += "\n|--|              |--|";
+
+        board += "\n|" + this.board[22][0] + "" + this.board[22][1] + "|              |" + this.board[8][0] + "" + this.board[8][1] + "|";
+        board += "\n|" + this.board[22][2] + "" + this.board[22][3] + "|              |" + this.board[8][2] + "" + this.board[8][3] + "|";
+        board += "\n|--|              |--|";
+
+        board += "\n|" + this.board[21][0] + "" + this.board[21][1] + "|              |" + this.board[9][0] + "" + this.board[9][1] + "|";
+        board += "\n|" + this.board[21][2] + "" + this.board[21][3] + "|              |" + this.board[9][2] + "" + this.board[9][3] + "|";
+        board += "\n|--|              |--|";
+
+        board += "\n|" + this.board[20][0] + "" + this.board[20][1] + "|              |" + this.board[10][0] + "" + this.board[10][1] + "|";
+        board += "\n|" + this.board[20][2] + "" + this.board[20][3] + "|              |" + this.board[10][2] + "" + this.board[10][3] + "|";
+        board += "\n|--|              |--|";
+
+        board += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[10][1] + "|";
+        board += "\n|" + this.board[19][2] + "" + this.board[19][3] + "|              |" + this.board[11][2] + "" + this.board[10][3] + "|";
+        
+
+        board += "\n|--x--------------x--|";
+
+        // Adds first bottom row
+        board += "\n|";
         for (int i = 18; i >= 12; i--) {
-            board += this.board[i] + "|";
+            board += this.board[i][0] + "" + this.board[i][1] + "|";
+        }
+
+        // Adds second bottom row
+        board += "\n|";
+        for (int i = 18; i >= 12; i--) {
+            board += this.board[i][2] + "" + this.board[i][3] + "|";
         }
 
         //Adding bottom outline with corners
         board += "\nX";
-        for(int i = 0; i < 2*dimension - 1; i++){
+        for(int i = 0; i < 3*dimension - 1; i++){
             board += '-';
         }
         board += "X";
         
         return board;
-    }*/
+    }
     
     public void movePlayer(int moves) {
         // Find current player's index
