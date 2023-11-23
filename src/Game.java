@@ -48,6 +48,18 @@ public class Game {
                 print("Invalid number of players. Please enter a number between 2 and 4.\n");
             }
         }
+        switch (Dicegame.NO_OF_PLAYERS) {
+            case 2:
+                Dicegame.START_MONEY = 20;
+                break;
+            case 3:
+                Dicegame.START_MONEY = 18;
+                break;
+
+            case 4:
+                Dicegame.START_MONEY = 16;
+                break;
+        }
 
         players = new Player[Dicegame.NO_OF_PLAYERS];
         for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
