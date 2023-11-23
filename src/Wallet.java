@@ -16,7 +16,7 @@ public class Wallet {
                             + moneyToAdd);
         } else {
             money += moneyToAdd;
-            money = Math.min(money, Dicegame.MONEY_TO_WIN); // Begrænser til maxMoneyToWin
+            //money = Math.min(money, Dicegame.MONEY_TO_WIN); // Begrænser til MONEY_TO_WIN
         }
     }
 

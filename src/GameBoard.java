@@ -210,7 +210,7 @@ class GameBoard{
 
                 //Adding bottom outline with corners
                 boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
+                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X";
@@ -220,7 +220,7 @@ class GameBoard{
 
                 //Adding top outline with corners
                 boardInterfaceString += 'X';
-                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
+                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
                     boardInterfaceString += '-';
                 }
                 boardInterfaceString += "X\n";
@@ -292,7 +292,8 @@ class GameBoard{
     }
 
 
-    public void updatePlayerPositions(Player[] players) {
+    public void updatePlayerPositions() {
+        Player[] players = Game.getPlayers();
         // Nulstil board
         for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
             for (int f = 0; f < Dicegame.NO_OF_FIELDS; f++) {

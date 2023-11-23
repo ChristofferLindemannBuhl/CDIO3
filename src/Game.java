@@ -1,12 +1,11 @@
 // Håndterer selve spillets logik
 
 public class Game {
-    java.util.Scanner scanner;
+    public static java.util.Scanner scanner;
     static boolean runTheTest = false;
 
-    GameBoard board;
     public static GameBoard board;
-    static Player[] players;
+    private static Player[] players;
     private int playerTurn;
     static Player currentPlayer;
 
@@ -72,32 +71,28 @@ public class Game {
         takePlayerTurn();
     }
 
-    private void takePlayerTurn() { // Alt hvad der sker på en tur, sker her fra.
+    private void takePlayerTurn() { // Alt hvad der sker på en tur, sker her fra. Rækkefølgen af handlinger i en tur skal styres her fra.
         currentPlayer = players[playerTurn];
-        // Der bliver holdt styr på, hvis tur det er, i variablen playerTurn.
-        print("\n" + currentPlayer.getPlayerName() + "'s turn. Type 'roll' to throw the dice.");
+        print("\n" + " ---------- " + currentPlayer.getPlayerName() + "'s turn" + " ----------");
 
-        waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
-
-        // Der er nu blevet rullet med terninger.
-
-        currentPlayer.move(currentPlayer.getSumOfDice());
-
-        showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
-        
-        board.updatePlayerPositions(players); // Opdatér board-interface
-      
-        print(board.toString()); //Printer boardet
-
-        board.runFieldLogic(currentPlayer); // Kør logikken for det felt spilleren landede på
-
-        playerStats(); //Printer spillers penge osv
-
-        if (checkGameEndingConditions()) { // Hvis
-            playerWonMessage();
+        if (currentPlayer.isInJail()) {
+            // Spilleren er i fængsel
+            print(currentPlayer.getPlayerName() + " is in jail with " + currentPlayer.getTurnsLeftInJail() + " turns to go. Skipping player...");
+        } else {
+            // Der bliver holdt styr på, hvis tur det er, i variablen playerTurn.
+            print("Type 'roll' to throw the dice.");
+            waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
+            // Der er nu blevet rullet med terninger.
+            showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
+            currentPlayer.move(currentPlayer.getSumOfDice());
+            playerStats(); //Printer spillers penge osv
+            if (checkGameEndingConditions()) { // Hvis
+                playerWonMessage();
+            }
         }
 
-        nextPlayerTurn(); //Næste spillers tur
+        //Næste spillers tur
+        nextPlayerTurn();
     }
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt

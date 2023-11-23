@@ -4,6 +4,7 @@ public class Player {
     private Dice[] dice;
     private Wallet wallet;
     private int position = 0;
+    private int turnsLeftInJail = 0;
 
     public Player(String name, int playerID) {
         this.name = name;
@@ -24,10 +25,6 @@ public class Player {
         for (int i = 0; i < Dicegame.NO_OF_DICE; i++) {
             dice[i].rollDie();
         }
-    }
-
-    public boolean checkForMoneyToWin() {
-        return wallet.getMoney() == Dicegame.MONEY_TO_WIN;
     }
 
     public int getDieValue(int die) {
@@ -69,10 +66,34 @@ public class Player {
 
         // Tjek om spilleren passerede start
         if (oldPlayerPosition + amountToMove >= Dicegame.NO_OF_FIELDS) {
-            // SPILLEREN PASSEREDE START - INDFØR LOGIK FOR AT PASSERE START
+            passedStart();
         }
+
+        // Kør logik for at spilleren bevæger sig
+        Game.board.updatePlayerPositions(); // Opdatér board-interface
+        Game.print(Game.board.toString()); //Printer boardet
+        Game.board.runFieldLogic(this); // Kør logikken for det felt spilleren landede på
     }
     public int getID() {
         return playerID;
+    }
+
+    public void passedStart() {
+        wallet.addMoney(Dicegame.MONEY_FOR_PASSING_START);
+    }
+
+    public boolean isInJail() {
+        if (turnsLeftInJail > 0) {
+            turnsLeftInJail--;
+            return true;
+        }
+        return false;
+    }
+    public void goToJail() {
+        setPosition(6);
+        turnsLeftInJail = Dicegame.TURNS_IN_JAIL;
+    }
+    public int getTurnsLeftInJail() {
+        return turnsLeftInJail;
     }
 }
