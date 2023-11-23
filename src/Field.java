@@ -49,7 +49,7 @@ public class Field {
 
     public static Field[] initializeFields() {
         // Laver et nyt array af fields
-        Field[] newFields = new Field[Dicegame.noOfFields];
+        Field[] newFields = new Field[Dicegame.NO_OF_FIELDS];
 
         // Kalder addFieldToList() og definerer fields'ne.
         addFieldToList(newFields, "Tower", 2, FieldEffects.positive, 250, false,
