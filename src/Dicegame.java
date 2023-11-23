@@ -10,7 +10,7 @@ public class Dicegame {
     static int BOARD_WIDTH = 7;
 
     public static void main(String[] args) {
-        System.out.print("\nWELCOME TO THE NEW GAME \n\nType 'Start' to begin or 'quit' to quit\n");
+        System.out.print("\nWELCOME TO THE NEW GAME \n\nType 's' to start or 'q' to quit\n");
         game = new Game();
     }
 
