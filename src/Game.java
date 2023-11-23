@@ -75,7 +75,7 @@ public class Game {
         
         board.movePlayer(currentPlayer.getSumOfDice()); //Rykker spilleren 
 
-       print(board.toString());    //Printer boardet
+        print(board.toString());    //Printer boardet
 
         playerStats();  //Printer spillers penge osv
 

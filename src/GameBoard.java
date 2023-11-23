@@ -252,7 +252,7 @@ class GameBoard{
     
 
     //Currently have a bug where the players can only move 1 turn.
-    
+
     public void movePlayer(int moves) {
         // Find current player's index
         int currentPlayerIndex = findPlayer();
@@ -292,22 +292,25 @@ class GameBoard{
         return -1; // Player not found
     }
 
-    private void playerTurn(){
-         // Increment the turn for the current player
-         this.currentPlayerTurn++;
-
-         // If the turn exceeds the number of players, reset it to 1 (loop back to the first player)
-         if (this.currentPlayerTurn > this.players) {
-             this.currentPlayerTurn = 1;
-         }
-     
+    private void playerTurn() {
+        // Increment the turn for the current player
+        this.currentPlayerTurn++;
+    
+        // If the turn exceeds the number of players, reset it to 0 (loop back to the first player)
+        if (this.currentPlayerTurn >= this.players) {
+            this.currentPlayerTurn = 0;
+        }
     }
+    
 
     private char getPlayerSymbol(int playerIndex) {
         char[] playerSymbols = {'A', 'B', 'C', 'D'};
         return playerSymbols[playerIndex];
     }
 
+    public int getPlayerturn(){
+        return this.currentPlayerTurn;
+    }
 
 }
 
