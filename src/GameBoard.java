@@ -76,8 +76,8 @@ class GameBoard{
         board += "\n|" + this.board[20][2] + "" + this.board[20][3] + "|              |" + this.board[10][2] + "" + this.board[10][3] + "|";
         board += "\n|--|              |--|";
 
-        board += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[10][1] + "|";
-        board += "\n|" + this.board[19][2] + "" + this.board[19][3] + "|              |" + this.board[11][2] + "" + this.board[10][3] + "|";
+        board += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[11][1] + "|";
+        board += "\n|" + this.board[19][2] + "" + this.board[19][3] + "|              |" + this.board[11][2] + "" + this.board[11][3] + "|";
         
 
         board += "\n|--x--------------x--|";
