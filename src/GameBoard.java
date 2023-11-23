@@ -249,7 +249,6 @@ class GameBoard{
 
         return board;
     }
-    
 
     //Currently have a bug where the players can only move 1 turn.
 

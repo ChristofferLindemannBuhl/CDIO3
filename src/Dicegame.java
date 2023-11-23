@@ -20,7 +20,7 @@ public class Dicegame {
  * 
  * Beskrivelser for felter i Field.initializeFields() i Field.java.
  * 
- * Tests
+ *
  * 
  * 
  */
