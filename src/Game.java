@@ -5,10 +5,11 @@ public class Game {
     static boolean runTheTest = false;
 
     Field[] fields;
-    GameBoard board;
-    Player[] players;
+    public static GameBoard board;
+    static Player[] players;
     private int playerTurn;
     static Player currentPlayer;
+    Chancen chancen = new Chancen();
 
     
     public Game() {
@@ -84,11 +85,19 @@ public class Game {
 
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         
-        board.movePlayer(currentPlayer); //Rykker spilleren
+        board.movePlayer(currentPlayer, currentPlayer.getSumOfDice()); //Rykker spilleren
+
 
         print(board.toString());    //Printer boardet
 
         playerStats();  //Printer spillers penge osv
+
+
+        //Test
+        chancen.drawChancenCard();
+        print(board.toString());    //Printer boardet
+        playerStats();  //Printer spillers penge osv
+        //Test end
 
         nextPlayerTurn();   //Næste spillers tur
     }
@@ -169,6 +178,10 @@ public class Game {
 
     public static Player getCurrentPlayer(){
         return currentPlayer;
+    }
+
+    public static Player[] getPlayers(){
+        return players;
     }
 
     // #endregion
