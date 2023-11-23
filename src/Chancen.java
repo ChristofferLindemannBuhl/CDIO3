@@ -131,7 +131,11 @@ class Chancen{
 
             break;
 
-            case 10://????
+            case 10:
+
+                System.out.println("Chancecard:\n");
+                System.out.println("Move 3 fields back");  //Tekst til kortet
+                Game.board.movePlayer(currentPlayer, -3);
 
             break;
 
