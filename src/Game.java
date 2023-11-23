@@ -1,10 +1,9 @@
 // Håndterer selve spillets logik
 
 public class Game {
-    java.util.Scanner scanner;
+    public static java.util.Scanner scanner;
     static boolean runTheTest = false;
 
-    GameBoard board;
     public static GameBoard board;
     static Player[] players;
     private int playerTurn;
