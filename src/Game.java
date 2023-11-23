@@ -82,14 +82,14 @@ public class Game {
 
     private void takePlayerTurn() { // Alt hvad der sker på en tur, sker her fra. Rækkefølgen af handlinger i en tur skal styres her fra.
         currentPlayer = players[playerTurn];
-        print("\n" + " ---------- " + currentPlayer.getPlayerName() + "'s turn" + " ----------");
+        print("\n" + " ---------- " + currentPlayer.getName() + "'s turn" + " ----------");
 
         if (currentPlayer.isInJail()) {
             // Spilleren er i fængsel
-            print(currentPlayer.getPlayerName() + " is in jail with " + currentPlayer.getTurnsLeftInJail() + " turns to go. Skipping player...");
+            print(currentPlayer.getName() + " is in jail for " + currentPlayer.getTurnsLeftInJail() + " more turn(s). Skipping player...");
         } else {
             // Der bliver holdt styr på, hvis tur det er, i variablen playerTurn.
-            print("Type 'roll' to throw the dice.");
+            print("Type 'r' to roll the dice.");
             waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
             // Der er nu blevet rullet med terninger.
             showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
@@ -162,7 +162,7 @@ public class Game {
     }
 
     private void playerWonMessage() {
-        print(currentPlayer.getPlayerName() + " won! You got the required amount of money to win!");
+        print(currentPlayer.getName() + " won! You got the required amount of money to win!");
         EndMessage();
     }
 

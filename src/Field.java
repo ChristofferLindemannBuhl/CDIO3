@@ -18,7 +18,7 @@ abstract class Field {
 
     protected abstract void landingLogic(Player player);
     protected void initialLandingMessage(Player player) {
-        Game.print(player.getPlayerName() + " landed on " + name);
+        Game.print(player.getName() + " landed on " + name);
     }
 }
 
@@ -47,7 +47,7 @@ class GoToJailField extends Field {
     public void landingLogic(Player player) {
         initialLandingMessage(player);
         // LOGIK FORTSÆTTER:...
-
+        player.goToJail();
     }
 }
 
@@ -57,7 +57,7 @@ class JailField extends Field {
     }
     public void landingLogic(Player player) {
         initialLandingMessage(player);
-        Game.print(player.getPlayerName() + " visited the people in jail.");
+        Game.print(player.getName() + " visited the people in jail.");
         // LOGIK FORTSÆTTER:...
 
     }
@@ -90,7 +90,7 @@ class ChanceField extends Field {
     }
     public void landingLogic(Player player) {
         initialLandingMessage(player);
-        Game.print(player.getPlayerName() + " draws a chance card!");
+        Game.print(player.getName() + " draws a chance card!");
         // LOGIK FORTSÆTTER:...
 
         drawChanceCard();
@@ -107,22 +107,21 @@ class ChanceField extends Field {
         var scanner = Game.scanner;
         int playerInput;
 
+        System.out.println("\nChance card:");
+
         switch(cardValue){
             case 1: //1: Ryk frem til start. (modtager xxx penge i "Player.move -> Player.passedStart")
-                System.out.println("Chancecard:\n");
-                System.out.println("Move to start and recieve money for passing start");  //Tekst til kortet
+                System.out.println("Move to start and receive money for passing start");  // Tekst til kortet
                 currentPlayer.setPosition(0);
                 break;
 
             case 2: //2: Ryk 5 felter frem
-                System.out.println("Chancecard:\n");
-                System.out.println("Move 5 fields ahead");  //Tekst til kortet
+                System.out.println("Move 5 fields ahead");  // Tekst til kortet
                 currentPlayer.move(5);
                 break;
 
             case 3: //3: Ryk 1 frem eller tag et kort mere
-                System.out.println("Chancecard:\n");
-                System.out.println("Pres 0 to move 1 field ahead or\npres 1 to draw another card");  //Tekst til kortet
+                System.out.println("Press 0 to move 1 field ahead or\npress 1 to draw another card");  // Tekst til kortet
                 while(true){
                     playerInput = scanner.nextInt();
                     if(playerInput == 0){   //0 = ryk 1 frem:
@@ -140,27 +139,23 @@ class ChanceField extends Field {
                 break;
 
             case 4: //4: Du har spist for meget slik betal 1 penge-penge
-                System.out.println("Chancecard:\n");
-                System.out.println("You ate too much candy. Pay $1");  //Tekst til kortet
+                System.out.println("You ate too much candy. Pay $1");  // Tekst til kortet
                 currentPlayer.wallet().substractMoney(1);
                 break;
 
             case 5: //5: Get out of jail free card
-                System.out.println("Chancecard:\n");
-                System.out.println("Its your lucky day. Get out of jail for free");  //Tekst til kortet
+                System.out.println("Its your lucky day. Get out of jail for free");  // Tekst til kortet
                 // Jail logic on player
                 break;
 
             case 6: //6: Go to jail
-                System.out.println("Chancecard:\n");
-                System.out.println("You were speeding. Go to jail");  //Tekst til kortet
+                System.out.println("You were speeding. Go to jail");  // Tekst til kortet
                 currentPlayer.goToJail();   //jail
                 //Jail logic on player
                 break;
 
-            case 7: //7: Det er din fødselsdag. modtag $1 penge fra alle deltagere
-                System.out.println("Chancecard:\n");
-                System.out.println("Its your birthday. Receive $1 from every person");  //Tekst til kortet
+            case 7: //7: Det er din fødselsdag. Modtag $1 penge fra alle deltagere
+                System.out.println("Its your birthday. Receive $1 from every person");  // Tekst til kortet
                 Player[] players = Game.getPlayers();
                 for(int i = 0; i < amountOfPlayers; i++){
                     if(currentPlayer.getID() != i){
@@ -171,28 +166,26 @@ class ChanceField extends Field {
                 break;
 
             case 8: //8: Du har lavet alle dine lektier modtag xxx-penge fra banken.
-                System.out.println("Chancecard:\n");
-                System.out.println("You made all your homework. Receive $3");  //Tekst til kortet
+                System.out.println("You made all your homework. Receive $3");  // Tekst til kortet
                 currentPlayer.wallet().addMoney(3);
                 break;
 
             case 9://9: Ryk frem til en random felt og få feltet gratis
-                int freeProberty;
+                int freeProperty;
                 do {
                     // Generer et tilfældigt tal mellem 0 og 23 (inklusive)
-                    freeProberty = random.nextInt(24);
-                } while (freeProberty % 3 == 0); // Undgå tal: 0, 3, 6, 9, 12, 15, 18, 21
-                System.out.println("Chancecard:\n");
-                System.out.println("Move to " + freeProberty + "and receive it for free!");  //Tekst til kortet
-                currentPlayer.setPosition(freeProberty);
-                //Recieve proberty for free logik
+                    freeProperty = random.nextInt(24);
+                } while (freeProperty % 3 == 0); // Undgå tal: 0, 3, 6, 9, 12, 15, 18, 21
+                System.out.println("Move to " + freeProperty + "and receive it for free!");  // Tekst til kortet
+                currentPlayer.setPosition(freeProperty);
+                //Receive property for free logic
                 break;
 
             case 10:
-                System.out.println("Chancecard:\n");
-                System.out.println("Move 3 fields back");  //Tekst til kortet
+                System.out.println("Move 3 fields back");  // Tekst til kortet
                 currentPlayer.move(-3);
                 break;
         }
+
     }
 }
