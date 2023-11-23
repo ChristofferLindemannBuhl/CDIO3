@@ -1,5 +1,3 @@
-// Håndterer selve spillets logik
-
 public class Game {
     java.util.Scanner scanner;
     static boolean runTheTest = false;
@@ -10,7 +8,6 @@ public class Game {
     private int playerTurn;
     Player currentPlayer;
 
-    
     public Game() {
         scanner = new java.util.Scanner(System.in);
         String input = scanner.nextLine();
@@ -19,7 +16,7 @@ public class Game {
             new WalletIllegalArgumentExceptionTest1().walletTest();
         } else if (input.equals("RunTest2")) {
             new WalletCalculatorTrueTest2().walletTest();
-        } else if (input.equals("Start") || input.equals("start")) {
+        } else if (input.equals("s") || input.equals("S")) {
             if (runTheTest)
                 runTest();
             else {
@@ -36,22 +33,38 @@ public class Game {
     }
 
     private void initializePlayers() {
-
+        
+        
+        
         while (true) {
-            print("Enter the number of players (2-4): ");
-            Dicegame.NO_OF_PLAYERS = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            print("\nEnter the number of players (2-4):\n");
+            scanner = new java.util.Scanner(System.in);
+            String input = scanner.nextLine();
+
+            System.out.println("\nYou typed '" +input +"' type 'y' to confirm and 'n' to reset\n");           
             
-            if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
+            String newInput = scanner.nextLine();
+
+            if (newInput.equals("y")){
+                int number = Integer.parseInt(input);
+                Dicegame.NO_OF_PLAYERS = number;
+
+                if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
                 break; // Break out of the loop if the number of players is valid
-            } else {
+                } 
+                else {
                 print("Invalid number of players. Please enter a number between 2 and 4.\n");
+                }
+            }
+            else{
             }
         }
+
         switch (Dicegame.NO_OF_PLAYERS) {
             case 2:
                 Dicegame.START_MONEY = 20;
                 break;
+
             case 3:
                 Dicegame.START_MONEY = 18;
                 break;
@@ -63,11 +76,10 @@ public class Game {
 
         players = new Player[Dicegame.NO_OF_PLAYERS];
         for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
-            print("Please enter the name for Player " + (i + 1) + ".");
+            print("\nPlease enter the name for Player " + (i + 1) + ".");
             players[i] = new Player(scanner.nextLine(), i);
         }
     }
-
 
     private void startGame() {
         takePlayerTurn();
@@ -76,34 +88,34 @@ public class Game {
     private void takePlayerTurn() { // Alt hvad der sker på en tur, sker her fra.
         currentPlayer = players[playerTurn];
         // Der bliver holdt styr på, hvis tur det er, i variablen playerTurn.
-        print("\n" + currentPlayer.getPlayerName() + "'s turn. Type 'roll' to throw the dice.");
+        print("\nPlayer"+ currentPlayer.getPlayerName() + "'s turn. Type 'r' to throw the dice.");
 
         waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
 
         // Der er nu blevet rullet med terninger.
 
         showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
-        
-        board.movePlayer(currentPlayer); //Rykker spilleren
 
-        print(board.toString());    //Printer boardet
+        board.movePlayer(currentPlayer); // Rykker spilleren
 
-        playerStats();  //Printer spillers penge osv
+        print(board.toString()); // Printer boardet
 
-        nextPlayerTurn();   //Næste spillers tur
+        playerStats(); // Printer spillers penge osv
+
+        nextPlayerTurn(); // Næste spillers tur
     }
-
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt
     // meget mere på.
     private void waitForRollInput() {
         String input = scanner.nextLine();
-        if (input.toLowerCase().equals("roll"))
+        if (input.toLowerCase().equals("r"))
             currentPlayer.rollDice();
         else {
-            print("Could not find a command for input: '" + input + "'. Type 'roll' to throw the dice.");
+            print("Could not find a command for input: '" + input + "'. Type 'r' to roll the dice.");
             waitForRollInput();
         }
+        
     }
 
     private void showPlayerRoll() {
@@ -127,7 +139,7 @@ public class Game {
     }
 
     private void nextPlayerTurn() {
-        
+
         incrementPlayerTurn();
         // Næste tur starter
         takePlayerTurn();
@@ -141,7 +153,6 @@ public class Game {
             playerTurn = 0;
     }
 
-
     private void playerWon() {
         print(currentPlayer.getPlayerName() + " won! You got the required amount of money to win!");
         EndMessage();
@@ -154,12 +165,12 @@ public class Game {
             print(player.getStats());
         }
 
-        print("\nType 'play' to play again. Type 'quit' to quit the game.");
+        print("\nType 'p' to play again. Type 'q' to quit the game.");
 
         String input = scanner.nextLine();
-        if (input.toLowerCase().equals("play"))
+        if (input.toLowerCase().equals("p"))
             initializeGame();
-        else if (input.toLowerCase().equals("quit"))
+        else if (input.toLowerCase().equals("q"))
             scanner.close();
         else {
             print("Could not find a command for input: '" + input + "'.");
