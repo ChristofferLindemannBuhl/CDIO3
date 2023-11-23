@@ -243,9 +243,9 @@ class GameBoard{
     }
 
     //Currently have a bug where the players can only move 1 turn.
-    public void movePlayer(Player player) {
+    public void movePlayer(Player player, int amountToMove) {
         // Move player
-        int newPlayerPosition = (player.getPosition() + player.getSumOfDice()) % fields;
+        int newPlayerPosition = (player.getPosition() + amountToMove) % fields;
 
         // Make previous spot empty
         board[player.getPosition()][player.getID()] = ' ';
