@@ -8,7 +8,7 @@ public class Game {
     GameBoard board;
     Player[] players;
     private int playerTurn;
-    Player currentPlayer;
+    static Player currentPlayer;
 
     
     public Game() {
@@ -154,6 +154,11 @@ public class Game {
             EndMessage();
         }
     }
+
+    public static Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
     // #endregion
 
     public void runTest() {
