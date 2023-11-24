@@ -34,51 +34,65 @@ class GameBoard{
         int spaceIndex = 0;
         fieldList.add(new StartField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Burger Café", 1, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Burger Café", 0, 1, 1, 2));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Pizzeria", 1, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Pizzeria", 0, 1, 1, 2));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Candy Shop", 1, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Candy Shop", 1, 1, 1, 2));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Ice Cream Shop", 1, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Ice Cream Shop", 1, 1, 1, 2));
         spaceIndex++;
         fieldList.add(new JailField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Museum", 2, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Museum", 2, 2, 1, 2));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Library", 2, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Library", 2, 2, 1, 2));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Skate Park", 2, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Skate Park", 3, 2, 2, 3));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Swimming Pool", 2, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Swimming Pool", 3, 2, 2, 3));
         spaceIndex++;
         fieldList.add(new ParkingField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Arcade", 3, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Arcade", 4, 3, 2, 3));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Cinema", 3, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Cinema", 4, 3, 2, 3));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Toy Store",3, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Toy Store",5, 3, 3, 4));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Pet Store", 3, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Pet Store", 5, 3, 3, 4));
         spaceIndex++;
         fieldList.add(new GoToJailField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Bowling alley", 4, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Bowling alley", 6, 4, 3, 4));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Zoo", 4, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Zoo", 6, 4, 3, 4));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Water Park", 5, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Water Park", 7, 5, 4, 5));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Beach", 5, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Beach", 7, 5, 4, 5));
+    }
+
+    public List<BuyableField> getBuyableFields() {
+        List<BuyableField> buyableFieldsList = new ArrayList<>();
+        for (Field field : fieldList) {
+            if (field.getClass() == BuyableField.class) {
+                buyableFieldsList.add((BuyableField)(field));
+            }
+        }
+        return buyableFieldsList;
+    }
+
+    public List<Field> getFields() {
+        return fieldList;
     }
 
     public String toString(){

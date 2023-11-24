@@ -10,7 +10,9 @@ public class Dicegame {
             BOARD_WIDTH = 7,
             NO_OF_CHANCE_CARDS = 10,
             MONEY_FOR_PASSING_START = 2,
-            TURNS_IN_JAIL = 2;
+            TURNS_IN_JAIL = 2,
+            PARKING_LOT_START_MONEY = 2,
+            PARKING_LOT_INCREMENT_MONEY = 1;
 
     public static void main(String[] args) {
         System.out.print("\nWELCOME TO THE NEW GAME \n\nType 's' to start or 'q' to quit\n");

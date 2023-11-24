@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 abstract class Field {
@@ -25,30 +27,155 @@ abstract class Field {
 }
 
 class BuyableField extends Field {
-    private final int PRICE_BUY, PRICE_HOUSE, PRICE_HOTEL;
+    protected final int PRICE_BUY, PRICE_HOUSE, PRICE_HOTEL, FIELD_FAMILY_ID;
+    private int landingFee = 0, sellValue = 0, noOfHouses = 0, noOfHotels = 0;
     private Player owner;
 
-    public BuyableField(int space, String name, int PRICE_BUY, int PRICE_HOUSE, int PRICE_HOTEL) {
+    public BuyableField(int space, String name, int FIELD_FAMILY_ID, int PRICE_BUY, int PRICE_HOUSE, int PRICE_HOTEL) {
         super(space, name);
+        this.FIELD_FAMILY_ID = FIELD_FAMILY_ID;
         this.PRICE_BUY = PRICE_BUY;
         this.PRICE_HOUSE = PRICE_HOUSE;
         this.PRICE_HOTEL = PRICE_HOTEL;
     }
 
     public void landingLogic(Player player) {
+        updateLandingFee();
+
         initialLandingMessage(player);
         // LOGIK FORTSÆTTER:...
-        // HVIS SPILLER HAR PENGE TIL FELTET, KØB DET. HVIS NOGEN EJER DET, BETAL DEM.
-        // HVIS SPILLEREN EJER DET I FORVEJEN, SPØRG OM DE VIL KØBE HUSE/HOTELLER.
-        if (name == "Start") {
-            player.wallet().addMoney(1);
-            System.out.print("You landed on start you get $1");
-        } 
-        else {
-            player.wallet().substractMoney(this.PRICE_BUY);
-            System.out.print("You just bought " + name + " for $" + this.PRICE_BUY);
-            player = owner;
+        if (owner == null) {
+            if (player.wallet().getMoney() >= PRICE_BUY) {
+                player.wallet().substractMoney(PRICE_BUY);
+                owner = player;
+                Game.print("You just bought " + name + " for $" + PRICE_BUY);
+            } else {
+                Game.print("You do not have $" + PRICE_BUY + " to buy " + name);
+            }
+        } else {
+            if (owner != player) {
+                if (noOfHouses > 0) {
+                    Game.print("You landed on " + owner + "'s " + name + " with " + noOfHouses + " house(s). You need to pay them $" + landingFee + " in fees.");
+                } else if (noOfHotels > 0) {
+                    Game.print("You landed on " + owner + "'s " + name + " with " + noOfHotels + " hotel(s). You need to pay them $" + landingFee + " in fees.");
+                } else {
+                    Game.print("You landed on " + owner + "'s " + name + ". You need to pay them $" + landingFee + " in fees.");
+                }
+
+                if (player.wallet().getMoney() < landingFee) { // Spilleren bliver nødt til at sælge grunde, hvis de har nogle
+                    Game.print("\nYou do not have the money for the fee.");
+                    int totaltPlayerValue = player.getTotalValue();
+                    // Hvis de har nok penge ved at sælge grunde
+                    if (totaltPlayerValue >= landingFee) {
+                        while(player.wallet().getMoney() < landingFee) {
+                            Game.print("You have $" + player.wallet().getMoney() + ". You are missing $" + (landingFee - player.wallet().getMoney()) + ". Choose a property to sell.");
+                            for (BuyableField ownedField : player.getOwnedFields()) {
+                                Game.print("(" + ownedField.space + ") - " + ownedField.name + ": $" + ownedField.sellValue);
+                            }
+                            boolean understoodInput = false;
+                            while (!understoodInput) {
+                                String input = Game.scanner.nextLine();
+                                for (BuyableField fieldToSell : player.getOwnedFields()) {
+                                    if (input.toLowerCase().equals(String.valueOf(fieldToSell.space))) {
+                                        List<BuyableField> buyableFields = Game.board.getBuyableFields();
+                                        // SÆLGER FELTET
+                                        for (int i = 0; i < buyableFields.size(); i++) {
+                                            if (buyableFields.get(i).space == fieldToSell.space) {
+                                                buyableFields.get(i).sellField();
+                                                understoodInput = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (!understoodInput) {
+                                    Game.print("Could not find field at space: '" + input + "'. Please write the space number from the list above.");
+                                }
+                            }
+                        }
+                    } else {
+                        // Hvis de ikke har nok, er de gået bankerot og spiller slutter
+                        Game.print("Your total value is $" + player.getTotalValue() + ". You are missing $" + (landingFee - player.getTotalValue()) + ". The game is therefore over.");
+                        Game.setGameIsOver();
+                    }
+                }
+                // Når koden er nået her til, burde spillet enten være slut, eller spilleren har nok til at betale bøden.
+                player.wallet().substractMoney(landingFee);
+                owner.wallet().addMoney(landingFee);
+            } else {
+                for (BuyableField otherField : Game.board.getBuyableFields()) {
+                    if (otherField.space != this.space && otherField.FIELD_FAMILY_ID == this.FIELD_FAMILY_ID) {
+                        if (otherField.owner != null) {
+                            if (otherField.owner == player) {
+                                // Spilleren kan købe et hus
+                                if (noOfHouses < 4 && noOfHotels == 0) { // HUS
+                                    if (player.wallet().getMoney() >= PRICE_HOUSE) {
+                                        player.wallet().substractMoney(PRICE_HOUSE);
+                                        noOfHouses++;
+                                        Game.print("You just bought a house on " + name + " for $" + PRICE_HOUSE + ".");
+                                        Game.print("You currently have " + noOfHouses + " houses on " + name + ".");
+                                    } else {
+                                        Game.print("You do not have $" + PRICE_HOUSE + " to buy a house on " + name + ".");
+                                    }
+                                } else { // HOTEL
+                                    if (player.wallet().getMoney() >= PRICE_HOTEL) {
+                                        player.wallet().substractMoney(PRICE_HOTEL);
+                                        noOfHotels++;
+                                        if (noOfHouses == 4) {
+                                            Game.print("You just bought a hotel on " + name + " for $" + PRICE_HOTEL + ", and demolished the houses.");
+                                        }
+                                        Game.print("You just bought a hotel on " + name + " for $" + PRICE_HOTEL + ".");
+                                        Game.print("You currently have " + noOfHotels + " hotels on " + name + ".");
+                                    } else {
+                                        Game.print("You do not have $" + PRICE_HOTEL + " to buy a hotel on " + name + ".");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+        updateSellValue();
+    }
+
+    private void updateLandingFee() {
+        int houseFeeMultiplier = (int)Math.round(noOfHouses * 0.5 * PRICE_HOUSE);
+        int hotelFeeMultiplier = 0;
+        if (noOfHotels > 0)
+            hotelFeeMultiplier = (int)Math.round(4 * 0.5 * PRICE_HOUSE + noOfHotels * 0.75 * PRICE_HOTEL);
+
+        landingFee = (int)Math.ceil(PRICE_BUY * 0.5) + houseFeeMultiplier + hotelFeeMultiplier;
+    }
+
+    private void updateSellValue() {
+        updateLandingFee();
+        sellValue = landingFee * 2;
+    }
+
+    public int getSellValue() {
+        return sellValue;
+    }
+
+    protected void sellField() {
+        owner.wallet().addMoney(sellValue);
+        // Reset field
+        owner = null;
+        landingFee = 0;
+        sellValue = 0;
+        noOfHouses = 0;
+        noOfHotels = 0;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public int getNoOfHotels() {
+        return noOfHotels;
+    }
+    public int getNoOfHouses() {
+        return noOfHouses;
     }
 }
 
@@ -97,6 +224,7 @@ class StartField extends Field {
 }
 
 class ParkingField extends Field {
+    private int moneyToGet = Dicegame.PARKING_LOT_START_MONEY;
     public ParkingField(int space) {
         super(space, "Parking");
     }
@@ -104,7 +232,9 @@ class ParkingField extends Field {
     public void landingLogic(Player player) {
         initialLandingMessage(player);
         // LOGIK FORTSÆTTER:...
-
+        Game.print("You found $" + moneyToGet);
+        player.wallet().addMoney(moneyToGet);
+        moneyToGet += Dicegame.PARKING_LOT_INCREMENT_MONEY;
     }
 }
 

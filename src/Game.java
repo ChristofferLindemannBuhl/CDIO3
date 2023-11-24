@@ -8,7 +8,7 @@ public class Game {
     static Player[] players;
     private int playerTurn;
     static Player currentPlayer;
-
+    public static boolean gameIsOver = false;
 
     public Game() {
         scanner = new java.util.Scanner(System.in);
@@ -29,13 +29,14 @@ public class Game {
 
     public void initializeGame() {
         // runTest();
+        gameIsOver = false;
         initializePlayers();
         board = new GameBoard();
         startGame();
     }
 
     private void initializePlayers() {
-        boolean testing = false;
+        boolean testing = true;
 
         if (!testing) {
             while (true) {
@@ -105,13 +106,13 @@ public class Game {
 
             currentPlayer.move(currentPlayer.getSumOfDice());
             playerStats(); //Printer spillers penge osv
-            if (checkGameEndingConditions()) { // Hvis
-                playerWonMessage();
-            }
         }
-
-        //Næste spillers tur
-        nextPlayerTurn();
+        if (gameIsOver) { // Hvis
+            gameOver();
+        } else {
+            //Næste spillers tur
+            nextPlayerTurn();
+        }
     }
 
     // #region Funktioner i turn-logikken - Nok lidt ligegyldigt at kigge særligt
@@ -142,15 +143,11 @@ public class Game {
 
     private void playerStats() {
         // Vis spillerens stats
-        print("\nYou now have $" + currentPlayer.wallet().getMoney());
-    }
-
-    private boolean checkGameEndingConditions() {
-        // Check om spilleren har vundet
-        boolean playerWon = false;
-        /* if (currentPlayer.checkForMoneyToWin())
-            playerWon = true; */
-        return playerWon;
+        print("\n\n---------------------- Player Stats ----------------------");
+        for (Player player : players) {
+            print(player.getStats(gameIsOver));
+        }
+        print("----------------------------------------------------------");
     }
 
     private void nextPlayerTurn() {
@@ -167,19 +164,20 @@ public class Game {
             playerTurn = 0;
     }
 
-    private void playerWonMessage() {
-        print(currentPlayer.getName() + " won! You got the required amount of money to win!");
+    public static void setGameIsOver() {
+        gameIsOver = true;
+    }
+
+    private void gameOver() {
         EndMessage();
     }
 
     private void EndMessage() {
-        print("--- Game Stats ---");
+        print("\n\n******************* GAME OVER *******************");
 
-        for (Player player : players) {
-            print(player.getStats());
-        }
+        playerStats();
 
-        print("\nType 'p' to play again. Type 'q' to quit the game.");
+        print("\n\nType 'p' to play again. Type 'q' to quit the game.");
 
         String input = scanner.nextLine();
         if (input.toLowerCase().equals("p"))

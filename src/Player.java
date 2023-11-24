@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private int playerID; // Bliver sat når spillerne bliver oprettet i starten af spillet
     private String name;
@@ -46,8 +50,35 @@ public class Player {
         return name;
     }
 
-    public String getStats() {
-        return name + " got " + wallet.getMoney() + " money.";
+    public String getStats(boolean showTotalPlayerValue) {
+        String stats = "              ---------- " + name + " ----------";
+        stats += "\n|" + "BACKPACK" + "|";
+        stats += "\n - Money: $" + wallet.getMoney() + ".";
+        if (hasGetOutOfJailFreeCard)
+            stats += "\n - Get out of jail card.";
+
+        List<BuyableField> ownedFields = getOwnedFields();
+        if (ownedFields.size() > 0) {
+            stats += "\n|" + "PROPERTIES" + "|";
+            for (BuyableField ownedField : ownedFields) {
+                stats += "\n * ";
+                if (ownedField.getNoOfHotels() > 0)
+                    stats += ownedField.name + ": " + ownedField.getNoOfHotels() + " hotels. Value: $" + ownedField.getSellValue() + ".";
+                else if (ownedField.getNoOfHouses() > 0)
+                    stats += ownedField.name + ": " + ownedField.getNoOfHouses() + " houses. Value: $" + ownedField.getSellValue() + ".";
+                else
+                    stats += ownedField.name + ": " + ownedField.getNoOfHouses() + ". Value: " + ownedField.getSellValue() + ".";
+            }
+        }
+        if (isInJail()) {
+            stats += "\n\n|" + "TURNS LEFT IN JAIL" + "|";
+            stats += "\n" + turnsLeftInJail + ".";
+        }
+        if (showTotalPlayerValue) {
+            stats += "\n\n|" + "TOTAL SCORE" + "|";
+            stats += "\n$" + getTotalValue() + ".";
+        }
+        return stats;
     }
 
     // Player wallet
@@ -84,6 +115,7 @@ public class Player {
 
     private void passedStart() {
         wallet.addMoney(Dicegame.MONEY_FOR_PASSING_START);
+        Game.print("You passed start and received $" + Dicegame.MONEY_FOR_PASSING_START);
     }
 
     public boolean isInJail() {
@@ -102,4 +134,21 @@ public class Player {
         return turnsLeftInJail;
     }
 
+    public int getTotalValue() {
+        int totaltPlayerValue = wallet().getMoney();
+        for (BuyableField ownedField : getOwnedFields()) {
+            totaltPlayerValue += ownedField.getSellValue();
+        }
+        return totaltPlayerValue;
+    }
+
+    public List<BuyableField> getOwnedFields() {
+        List<BuyableField> ownedFields = new ArrayList<>();
+        for (BuyableField field : Game.board.getBuyableFields()) {
+            if (field.getOwner() == this) {
+                ownedFields.add(field);
+            }
+        }
+        return ownedFields;
+    }
 }
