@@ -1,0 +1,22 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor Spiller as S
+actor "Spillebræt" as SB
+
+rectangle "Gå i fængsel" {
+  S -- (Land på angiven plads)
+  (Land på angiven plads) --> (Initier Gå i fængsel)
+  (Initier Gå i fængsel) --> (Flyt brik til fængsel)
+  (Initier Gå i fængsel) --> (Afslut spillerens tur)
+  (Initier Gå i fængsel) --> (Spiller kan ikke udføre handlinger)
+  (Flyt brik til fængsel) --> (Vent på næste tur)
+}
+
+S --> (Land på angiven plads)
+SB --> (Land på angiven plads)
+
+@enduml
+
