@@ -55,11 +55,11 @@ class BuyableField extends Field {
         } else {
             if (owner != player) {
                 if (noOfHouses > 0) {
-                    Game.print("You landed on " + owner + "'s " + name + " with " + noOfHouses + " house(s). You need to pay them $" + landingFee + " in fees.");
+                    Game.print("You landed on " + owner.getName() + "'s " + name + " with " + noOfHouses + " house(s). You need to pay them $" + landingFee + " in fees.");
                 } else if (noOfHotels > 0) {
-                    Game.print("You landed on " + owner + "'s " + name + " with " + noOfHotels + " hotel(s). You need to pay them $" + landingFee + " in fees.");
+                    Game.print("You landed on " + owner.getName() + "'s " + name + " with " + noOfHotels + " hotel(s). You need to pay them $" + landingFee + " in fees.");
                 } else {
-                    Game.print("You landed on " + owner + "'s " + name + ". You need to pay them $" + landingFee + " in fees.");
+                    Game.print("You landed on " + owner.getName() + "'s " + name + ". You need to pay them $" + landingFee + " in fees.");
                 }
 
                 if (player.wallet().getMoney() < landingFee) { // Spilleren bliver nødt til at sælge grunde, hvis de har nogle
@@ -123,6 +123,7 @@ class BuyableField extends Field {
                                         noOfHotels++;
                                         if (noOfHouses == 4) {
                                             Game.print("You just bought a hotel on " + name + " for $" + PRICE_HOTEL + ", and demolished the houses.");
+                                            noOfHouses = 0;
                                         }
                                         Game.print("You just bought a hotel on " + name + " for $" + PRICE_HOTEL + ".");
                                         Game.print("You currently have " + noOfHotels + " hotels on " + name + ".");
@@ -165,6 +166,10 @@ class BuyableField extends Field {
         sellValue = 0;
         noOfHouses = 0;
         noOfHotels = 0;
+    }
+
+    public int getLandingFee() {
+        return landingFee;
     }
 
     public Player getOwner() {
@@ -224,7 +229,7 @@ class StartField extends Field {
 }
 
 class ParkingField extends Field {
-    private int moneyToGet = Dicegame.PARKING_LOT_START_MONEY;
+    private static int moneyToGet = Dicegame.PARKING_LOT_START_MONEY;
     public ParkingField(int space) {
         super(space, "Parking");
     }
@@ -235,6 +240,10 @@ class ParkingField extends Field {
         Game.print("You found $" + moneyToGet);
         player.wallet().addMoney(moneyToGet);
         moneyToGet += Dicegame.PARKING_LOT_INCREMENT_MONEY;
+    }
+
+    public static int getMoneyOnParkingLot() {
+        return moneyToGet;
     }
 }
 
@@ -277,16 +286,22 @@ class ChanceField extends Field {
                 System.out.println("Press 0 to move 1 field ahead, or,\npress 1 to draw another card."); // Tekst til
                                                                                                          // kortet
                 while (true) {
-                    playerInput = Game.scanner.nextInt();
-                    if (playerInput == 0) { // 0 = ryk 1 frem:
-                        currentPlayer.move(1);
-                        break;
-                    } else if (playerInput == 1) { // 1 = tag et kort mere
-                        drawChanceCard();
-                        break;
+                    String input = Game.scanner.nextLine();
+                    if (Game.isNumeric(input)) {
+                        int number = Integer.parseInt(input);
+                        if (number == 0) {
+                            currentPlayer.move(1);
+                            break;
+                        } else if (number == 1) {
+                            drawChanceCard();
+                            break;
+                        } else {
+                            System.out.println("Please enter a number (0-1).");
+                        }
                     } else {
                         System.out.println("Please enter a valid number (0-1).");
                     }
+
                 }
                 break;
 

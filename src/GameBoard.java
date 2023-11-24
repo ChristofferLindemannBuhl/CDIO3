@@ -115,30 +115,228 @@ class GameBoard{
         lastCellRowCounter = 0;
 
         StringBuilder boardMap = new StringBuilder();
-        boardMap.append("X-------x-------x-------x-------x-------x-------x-------X"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x-------x-------x-------x-------x-------x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("x-------x-------x-------x-------x-------x-------x-------x"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
-        boardMap.append("X-------x-------x-------x-------x-------x-------x-------X"); boardMap.append("\n");
+
+        boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|                |" + buyableFieldHousingFormatter() + "|" + buyableFieldHousingFormatter() + "|                |" + buyableFieldHousingFormatter() + "|" + buyableFieldHousingFormatter() + "|                |"); boardMap.append("\n");
+        boardMap.append("|" + startFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + chanceFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + jailFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|                |" + buyableFieldValueFormatter() + "|" + buyableFieldValueFormatter() + "|                |" + buyableFieldValueFormatter() + "|" + buyableFieldValueFormatter() + "|                |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldHousingFormatter() + "|                                                                                    |" + buyableFieldHousingFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldNameFormatter() + "|                                                                                    |" + buyableFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldValueFormatter() + "|                                                                                    |" + buyableFieldValueFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldHousingFormatter() + "|                                                                                    |" + buyableFieldHousingFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldNameFormatter() + "|                                                                                    |" + buyableFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldValueFormatter() + "|                                                                                    |" + buyableFieldValueFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|                |                                                                                    |                |"); boardMap.append("\n");
+        boardMap.append("|" + chanceFieldNameFormatter() + "|                                                                                    |" + chanceFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|                |                                                                                    |                |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldHousingFormatter() + "|                                                                                    |" + buyableFieldHousingFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldNameFormatter() + "|                                                                                    |" + buyableFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldValueFormatter() + "|                                                                                    |" + buyableFieldValueFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldHousingFormatter() + "|                                                                                    |" + buyableFieldHousingFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldNameFormatter() + "|                                                                                    |" + buyableFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + buyableFieldValueFormatter() + "|                                                                                    |" + buyableFieldValueFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |                                                                                    | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + buyableFieldOwnerFormatter() + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("|                |" + buyableFieldHousingFormatter() + "|" + buyableFieldHousingFormatter() + "|                |" + buyableFieldHousingFormatter() + "|" + buyableFieldHousingFormatter() + "|" + parkingLotFieldMoneyFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|" + goToJailFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + chanceFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + buyableFieldNameFormatter() + "|" + parkingLotFieldNameFormatter() + "|"); boardMap.append("\n");
+        boardMap.append("|                |" + buyableFieldValueFormatter() + "|" + buyableFieldValueFormatter() + "|                |" + buyableFieldValueFormatter() + "|" + buyableFieldValueFormatter() + "|                |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " | " + playerPositionIndexer() + "            " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
 
         return boardMap.toString();
+    }
+
+    private String startFieldNameFormatter() {
+        return "      START     ";
+    }
+    private String chanceFieldNameFormatter() {
+        return "     CHANCE     ";
+    }
+    private String jailFieldNameFormatter() {
+        return "      JAIL      ";
+    }
+    private String goToJailFieldNameFormatter() {
+        return "   GO TO JAIL   ";
+    }
+    private String parkingLotFieldNameFormatter() {
+        return "   PARKING LOT  ";
+    }
+    private String parkingLotFieldMoneyFormatter() {
+        String formattedString = "";
+
+        String moneyToGetString = String.valueOf(ParkingField.getMoneyOnParkingLot());
+        int noOfCharatersInMoney = moneyToGetString.length();
+
+        int noOfSpacesOnRightSide = (int)Math.floor((16 - noOfCharatersInMoney) / 2.0);
+        int noOfSpacesOnEachLeftSide = noOfSpacesOnRightSide;
+        if (noOfCharatersInMoney % 2 == 1) { // hvis ulige
+            noOfSpacesOnEachLeftSide++;
+        }
+        for (int i = 0; i < noOfSpacesOnEachLeftSide - 1; i++) {
+            formattedString += " ";
+        }
+        formattedString += "$" + moneyToGetString;
+        for (int i = 0; i < noOfSpacesOnRightSide; i++) {
+            formattedString += " ";
+        }
+
+        return formattedString;
+    }
+
+    private final int[] buyableFieldFormatOrder = {1, 2, 4, 5, 23, 7, 22, 8, 20, 10, 19, 11, 17, 16, 14, 13};
+
+    int currentFieldNameInOrder = 0;
+    private String buyableFieldNameFormatter() {
+        String formattedString = "";
+
+        String fieldNameString = fieldList.get(buyableFieldFormatOrder[currentFieldNameInOrder]).name;
+        int noOfCharatersInFieldName = fieldNameString.length();
+
+        int noOfSpacesOnRightSide = (int)Math.floor((16 - noOfCharatersInFieldName) / 2.0);
+        int noOfSpacesOnEachLeftSide = noOfSpacesOnRightSide;
+        if (noOfCharatersInFieldName % 2 == 1) { // hvis ulige
+            noOfSpacesOnEachLeftSide++;
+        }
+        for (int i = 0; i < noOfSpacesOnEachLeftSide; i++) {
+            formattedString += " ";
+        }
+        formattedString += fieldNameString;
+        for (int i = 0; i < noOfSpacesOnRightSide; i++) {
+            formattedString += " ";
+        }
+
+        // Opdater currentFieldNameInOrder så det passer med det næste felt
+        currentFieldNameInOrder++;
+        if (currentFieldNameInOrder > 15)
+            currentFieldNameInOrder = 0;
+
+        return formattedString;
+    }
+    int currentFieldHousingInOrder = 0;
+    private String buyableFieldHousingFormatter() {
+        String formattedString = "";
+
+        int noOfHouses = 0;
+        int noOfHotels = 0;
+
+        for (BuyableField field : getBuyableFields()) {
+            if (field.getSpace() == buyableFieldFormatOrder[currentFieldHousingInOrder]) {
+                noOfHouses = field.getNoOfHouses();
+                noOfHotels = field.getNoOfHotels();
+            }
+        }
+
+        String housingString = "";
+        if (noOfHotels > 0) {
+            for (int i = 0; i < noOfHotels; i++) {
+                housingString += "O";
+            }
+        }
+        if (noOfHouses > 0) {
+            for (int i = 0; i < noOfHouses; i++) {
+                housingString += "o";
+            }
+        }
+        
+        int noOfCharatersInHousingString = housingString.length();
+
+        int noOfSpacesOnRightSide = (int)Math.floor((16 - noOfCharatersInHousingString) / 2.0);
+        int noOfSpacesOnEachLeftSide = noOfSpacesOnRightSide;
+        if (noOfCharatersInHousingString % 2 == 1) { // hvis ulige
+            noOfSpacesOnEachLeftSide++;
+        }
+        for (int i = 0; i < noOfSpacesOnEachLeftSide; i++) {
+            formattedString += " ";
+        }
+        formattedString += housingString;
+        for (int i = 0; i < noOfSpacesOnRightSide; i++) {
+            formattedString += " ";
+        }
+
+        // Opdater currentFieldHousingInOrder så det passer med det næste felt
+        currentFieldHousingInOrder++;
+        if (currentFieldHousingInOrder > 15)
+            currentFieldHousingInOrder = 0;
+
+        return formattedString;
+    }
+
+    int currentFieldValueInOrder = 0;
+    private String buyableFieldValueFormatter() {
+        String formattedString = "";
+
+        int fieldValue = 0;
+        String fieldValueString = "";
+        for (BuyableField field : getBuyableFields()) {
+            if (field.getSpace() == buyableFieldFormatOrder[currentFieldValueInOrder]) {
+                if (field.getOwner() == null) {
+                    fieldValue = field.PRICE_BUY;
+                    fieldValueString = "Price: $" + fieldValue;
+                } else {
+                    fieldValue = field.getLandingFee();
+                    fieldValueString = "Fee: $" + fieldValue;
+                }
+            }
+        }
+
+        int noOfCharatersInValueString = fieldValueString.length();
+
+        int noOfSpacesOnRightSide = (int)Math.floor((16 - noOfCharatersInValueString) / 2.0);
+        int noOfSpacesOnEachLeftSide = noOfSpacesOnRightSide;
+        if (noOfCharatersInValueString % 2 == 1) { // hvis ulige
+            noOfSpacesOnEachLeftSide++;
+        }
+        for (int i = 0; i < noOfSpacesOnEachLeftSide; i++) {
+            formattedString += " ";
+        }
+        formattedString += fieldValueString;
+        for (int i = 0; i < noOfSpacesOnRightSide; i++) {
+            formattedString += " ";
+        }
+
+        // Opdater currentFieldHousingInOrder så det passer med det næste felt
+        currentFieldValueInOrder++;
+        if (currentFieldValueInOrder > 15)
+            currentFieldValueInOrder = 0;
+
+        return formattedString;
+    }
+    int currentFieldOwnerInOrder = 0;
+    private String buyableFieldOwnerFormatter() {
+        String formattedString = "            ";
+
+        for (BuyableField field : getBuyableFields()) {
+            if (field.getSpace() == buyableFieldFormatOrder[currentFieldOwnerInOrder]) {
+                Player fieldOwner = field.getOwner();
+                if (fieldOwner != null) {
+                    formattedString = "  Owner: " + getPlayerSymbol(fieldOwner.getID()) + "  ";
+                }
+            }
+        }
+
+        // Opdater currentFieldNameInOrder så det passer med det næste felt
+        currentFieldOwnerInOrder++;
+        if (currentFieldOwnerInOrder > 15)
+            currentFieldOwnerInOrder = 0;
+
+        return formattedString;
     }
 
     int indexerCount = 0;

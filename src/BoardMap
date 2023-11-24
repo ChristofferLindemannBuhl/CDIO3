@@ -33,7 +33,7 @@
          boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
          boardMap.append("| 1            2 | 1            2 | 1            2 | 1            2 | 1            2 | 1            2 | 1            2 |"); boardMap.append("\n");
          boardMap.append("|                |        h       |        h       |                |        h       |        h       |                |"); boardMap.append("\n");
-         boardMap.append("|        x       |        x       |        x       |        x       |        x       |        x       |        x       |"); boardMap.append("\n");
+         boardMap.append("|        s       |        x       |        x       |        c       |        x       |        x       |        j       |"); boardMap.append("\n");
          boardMap.append("|                |                |                |                |                |                |                |"); boardMap.append("\n");
          boardMap.append("| 3            4 | 3            4 | 3            4 | 3            4 | 3            4 | 3            4 | 3            4 |"); boardMap.append("\n");
          boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
@@ -51,7 +51,7 @@
          boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
          boardMap.append("| 1            2 |                                                                                    | 1            2 |"); boardMap.append("\n");
          boardMap.append("|                |                                                                                    |                |"); boardMap.append("\n");
-         boardMap.append("|        x       |                                                                                    |        x       |"); boardMap.append("\n");
+         boardMap.append("|        c       |                                                                                    |        c       |"); boardMap.append("\n");
          boardMap.append("|                |                                                                                    |                |"); boardMap.append("\n");
          boardMap.append("| 3            4 |                                                                                    | 3            4 |"); boardMap.append("\n");
          boardMap.append("x----------------x                                                                                    x----------------x"); boardMap.append("\n");
@@ -68,8 +68,8 @@
          boardMap.append("| 3            4 |                                                                                    | 3            4 |"); boardMap.append("\n");
          boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");
          boardMap.append("| 1            2 | 1            2 | 1            2 | 1            2 | 1            2 | 1            2 | 1            2 |"); boardMap.append("\n");
-         boardMap.append("|                |        h       |        h       |                |        h       |        h       |                |"); boardMap.append("\n");
-         boardMap.append("|        x       |        x       |        x       |        x       |        x       |        x       |        x       |"); boardMap.append("\n");
+         boardMap.append("|                |        h       |        h       |                |        h       |        h       |        $       |"); boardMap.append("\n");
+         boardMap.append("|        g       |        x       |        x       |        c       |        x       |        x       |        p       |"); boardMap.append("\n");
          boardMap.append("|                |                |                |                |                |                |                |"); boardMap.append("\n");
          boardMap.append("| 3            4 | 3            4 | 3            4 | 3            4 | 3            4 | 3            4 | 3            4 |"); boardMap.append("\n");
          boardMap.append("X----------------x----------------x----------------x----------------x----------------x----------------x----------------X"); boardMap.append("\n");

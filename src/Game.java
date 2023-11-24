@@ -39,19 +39,19 @@ public class Game {
         boolean testing = false;
 
         if (!testing) {
+            print("\nEnter the number of players (2-4):\n");
             while (true) {
-                print("\nEnter the number of players (2-4):\n");
-                String input = scanner.nextLine();
-                System.out.println("\nYou typed '" + input + "' type 'y' to confirm and 'n' to reset\n");
-                String newInput = scanner.nextLine();
-                if (newInput.equals("y")) {
-                    int number = Integer.parseInt(input);
-                    Dicegame.NO_OF_PLAYERS = number;
-                    if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
-                        break; // Break out of the loop if the number of players is valid
+                String input = Game.scanner.nextLine();
+                if (isNumeric(input)) {
+                    int noOfPlayers = Integer.parseInt(input);
+                    if (noOfPlayers >= 2 && noOfPlayers <= 4) {
+                        Dicegame.NO_OF_PLAYERS = Integer.parseInt(input);
+                        break;
                     } else {
                         print("Invalid number of players. Please enter a number between 2 and 4.\n");
                     }
+                } else {
+                    print("Could not find a number. Please enter a number between 2 and 4.\n");
                 }
             }
 
@@ -104,6 +104,11 @@ public class Game {
             // Der er nu blevet rullet med terninger.
 
             currentPlayer.move(currentPlayer.getSumOfDice());
+
+            board.updatePlayerPositions(); // Opdatér board-interface
+            print(Game.board.toString()); // Printer boardet
+            print("(You can see what happened above the board.)");
+
             playerStats(); //Printer spillers penge osv
         }
         if (gameIsOver) { // Hvis
@@ -124,7 +129,6 @@ public class Game {
             print("Could not find a command for input: '" + input + "'. Type 'r' to roll the dice.");
             waitForRollInput();
         }
-
     }
 
     public static void showPlayerRoll() {
@@ -207,6 +211,18 @@ public class Game {
 
     public static void print(String string) {
         System.out.println(string);
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int number = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
 }

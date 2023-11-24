@@ -63,11 +63,11 @@ public class Player {
             for (BuyableField ownedField : ownedFields) {
                 stats += "\n * ";
                 if (ownedField.getNoOfHotels() > 0)
-                    stats += ownedField.name + ": " + ownedField.getNoOfHotels() + " hotels. Value: $" + ownedField.getSellValue() + ".";
+                    stats += ownedField.name + ": " + ownedField.getNoOfHotels() + " hotel(s). Value: $" + ownedField.getSellValue() + ".";
                 else if (ownedField.getNoOfHouses() > 0)
-                    stats += ownedField.name + ": " + ownedField.getNoOfHouses() + " houses. Value: $" + ownedField.getSellValue() + ".";
+                    stats += ownedField.name + ": " + ownedField.getNoOfHouses() + " house(s). Value: $" + ownedField.getSellValue() + ".";
                 else
-                    stats += ownedField.name + ": Value: " + ownedField.getSellValue() + ".";
+                    stats += ownedField.name + ": Value: $" + ownedField.getSellValue() + ".";
             }
         }
         if (isInJail()) {
@@ -107,8 +107,6 @@ public class Player {
         // Placér spilleren på den nye position
         position = newPlayerPosition;
 
-        Game.board.updatePlayerPositions(); // Opdatér board-interface
-        Game.print(Game.board.toString()); // Printer boardet
         Game.showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         Game.board.runFieldLogic(this); // Kør logikken for det felt spilleren landede på
     }
