@@ -1,87 +1,108 @@
-@startuml DesignDiagram
-class Dice {
-  -faceValue: int
-  +rollDie(): void
-  +getValue(): int
-}
+@startuml
 
-class Field {
-  -name: String
-  -space: int
-  -value: int
-  -grantsBonusTurn: boolean
-  -landingDescription: String
-  -fieldEffect: FieldEffects
-  +Field(name: String, space: int, fieldEffect: FieldEffects, value: int, grantsBonusTurn: boolean, landingDescription: String)
-  +getName(): String
-  +getSpace(): int
-  +getFieldEffect(): FieldEffects
-  +getLandingDescription(): String
-  +getValue(): int
-  +grantsBonusTurn(): boolean
-  +initializeFields(): Field[]
-  -addFieldToList(fieldsArray: Field[], name: String, space: int, fieldEffect: FieldEffects, value: int, grantsBonusTurn: boolean, landingDescription: String): void
-}
-
-enum FieldEffects {
-  neutral
-  positive
-  negative
-}
-
-class Game {
-  -scanner: java.util.Scanner
-  -runTheTest: boolean
-  -fields: Field[]
-  -players: Player[]
-  -playerTurn: int
-  -currentPlayer: Player
-  +Game()
-  +initializeGame(): void
-  -initializePlayers(): void
-  -initializeFields(): void
-  -startGame(): void
-  -takePlayerTurn(): void
-  -fieldLogic(): void
-  -waitForRollInput(): void
-  -showPlayerRoll(): void
-  -playerStats(): void
-  -nextPlayerTurn(): void
-  -incrementPlayerTurn(): void
-  -playerGetsBonusTurn(): boolean
-  -playerWon(): void
-  -EndMessage(): void
-  +runTest(): void
-  +print(string: String): void
+class Dicegame {
+  static final int NO_OF_PLAYERS = 4
+  static final int NO_OF_FIELDS = 24
+  static final int BOARD_WIDTH = 6
+  static final int MONEY_FOR_PASSING_START = 200
+  static final int START_MONEY = 1500
+  static final int TURNS_IN_JAIL = 3
 }
 
 class Player {
-  -name: String
-  -dice: Dice[]
-  -wallet: Wallet
-  +Player(name: String)
-  -initializePlayerDice(): void
-  +rollDice(): void
-  +checkForMoneyToWin(): boolean
-  +getDieValue(die: int): int
-  +getSumOfDice(): int
-  +getPlayerName(): String
-  +getStats(): String
-  +wallet(): Wallet
+  -int playerID
+  -String name
+  -Dice[] dice
+  -Wallet wallet
+  -int position
+  -int turnsLeftInJail
+  -boolean hasGetOutOfJailFreeCard
+  +Player(String name, int playerID)
+  +void rollDice()
+  +int getDieValue(int die)
+  +int getSumOfDice()
+  +int getID()
+  +String getName()
+  +String getStats()
+  +Wallet wallet()
+  +int getPosition()
+  +void setPosition(int newPlayerPosition)
+  +void move(int amountToMove)
+  -void processPlayerMovement(int newPlayerPosition)
+  -void validateIfPassedStart(int oldPlayerPosition, int newPlayerPosition)
+  +boolean isInJail()
+  +void goToJail()
+  +int getTurnsLeftInJail()
 }
 
 class Wallet {
-  -money: int
+  -int money
   +Wallet()
-  +getMoney(): int
-  +addMoney(moneyToAdd: int): void
-  +substractMoney(moneyToSubtract: int): void
+  +int getMoney()
+  +void addMoney(int moneyToAdd)
+  +void subtractMoney(int moneyToSubtract)
 }
 
-Game --> Field
-Game --> Player
-Player --> Dice
-Player --> Wallet
-Field --> FieldEffects
+class Field {
+  -int space
+  +Field(int space)
+  +int getSpace()
+  +void landingLogic(Player currentPlayer)
+}
+
+class StartField {
+  +StartField(int space)
+}
+
+class BuyableField {
+  -String name
+  -int price
+  -int rent
+  -int owner
+  +BuyableField(int space, String name, int price, int rent, int owner)
+  +void landingLogic(Player currentPlayer)
+}
+
+class ChanceField {
+  +ChanceField(int space)
+  +void landingLogic(Player currentPlayer)
+}
+
+class JailField {
+  +JailField(int space)
+  +void landingLogic(Player currentPlayer)
+}
+
+class ParkingField {
+  +ParkingField(int space)
+  +void landingLogic(Player currentPlayer)
+}
+
+class GoToJailField {
+  +GoToJailField(int space)
+  +void landingLogic(Player currentPlayer)
+}
+
+class GameBoard {
+  -char[][] board
+  -List<Field> fieldList
+  +GameBoard()
+  +void initializeBoard()
+  +String toString()
+  +void updatePlayerPositions()
+  +void runFieldLogic(Player currentPlayer)
+  {private} +char getPlayerSymbol(int playerIndex)
+}
+
+Dicegame --|> Player
+Player --|> Wallet
+Field <|-- StartField
+Field <|-- BuyableField
+Field <|-- ChanceField
+Field <|-- JailField
+Field <|-- ParkingField
+Field <|-- GoToJailField
+Dicegame --> GameBoard
+GameBoard -- Field
 
 @enduml

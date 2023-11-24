@@ -29,7 +29,6 @@ public class Game {
 
     public void initializeGame() {
         // runTest();
-        scanner = new java.util.Scanner(System.in);
         initializePlayers();
         board = new GameBoard();
         startGame();

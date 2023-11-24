@@ -47,7 +47,15 @@ class GoToJailField extends Field {
     public void landingLogic(Player player) {
         initialLandingMessage(player);
         // LOGIK FORTSÆTTER:...
-        player.goToJail();
+        if(!player.hasGetOutOfJailFreeCard){
+            player.goToJail();
+        }
+        else{
+            player.hasGetOutOfJailFreeCard = false;
+            Game.print("but " + player.getName() + " had a get out of jail free card and can move next turn");
+        }
+
+
     }
 }
 
@@ -56,6 +64,7 @@ class JailField extends Field {
         super(space, "Jail");
     }
     public void landingLogic(Player player) {
+        //Dette skal kun printes hvis spilleren besøger jail
         initialLandingMessage(player);
         Game.print(player.getName() + " visited the people in jail.");
         // LOGIK FORTSÆTTER:...
@@ -143,12 +152,12 @@ class ChanceField extends Field {
             case 5: //5: Get out of jail free card
                 System.out.println("Its your lucky day. Get out of jail for free.");  // Tekst til kortet
                 // Jail logic on player
+                currentPlayer.hasGetOutOfJailFreeCard = true;
                 break;
 
             case 6: //6: Go to jail
                 System.out.println("You were speeding. Go to jail.");  // Tekst til kortet
                 currentPlayer.goToJail();   //jail
-                //Jail logic on player
                 break;
 
             case 7: //7: Det er din fødselsdag. Modtag $1 penge fra alle deltagere
@@ -162,7 +171,7 @@ class ChanceField extends Field {
                 currentPlayer.wallet().addMoney(Dicegame.NO_OF_PLAYERS - 1);
                 break;
 
-            case 8: //8: Du har lavet alle dine lektier modtag xxx-penge fra banken.
+            case 8: //8: Du har lavet alle dine lektier modtag $3 fra banken.
                 System.out.println("You made all your homework. Receive $3.");  // Tekst til kortet
                 currentPlayer.wallet().addMoney(3);
                 break;

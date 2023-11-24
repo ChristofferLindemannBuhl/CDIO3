@@ -5,6 +5,7 @@ public class Player {
     private Wallet wallet;
     private int position = 0;
     private int turnsLeftInJail = 0;
+    public boolean hasGetOutOfJailFreeCard = false;
 
     public Player(String name, int playerID) {
         this.name = name;
@@ -93,10 +94,12 @@ public class Player {
         return false;
     }
     public void goToJail() {
-        setPosition(6);
-        turnsLeftInJail = Dicegame.TURNS_IN_JAIL + 1; // Plusser med én, så der står man har en tur mere i fængsel, når det er ens sidste tur i fængslet.
+            setPosition(6);
+            turnsLeftInJail = Dicegame.TURNS_IN_JAIL + 1; // Plusser med én, så der står man har en tur mere i fængsel, når det er ens sidste tur i fængslet.
+
     }
     public int getTurnsLeftInJail() {
         return turnsLeftInJail;
     }
+
 }
