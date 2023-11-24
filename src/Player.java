@@ -67,12 +67,12 @@ public class Player {
                 else if (ownedField.getNoOfHouses() > 0)
                     stats += ownedField.name + ": " + ownedField.getNoOfHouses() + " houses. Value: $" + ownedField.getSellValue() + ".";
                 else
-                    stats += ownedField.name + ": " + ownedField.getNoOfHouses() + ". Value: " + ownedField.getSellValue() + ".";
+                    stats += ownedField.name + ": Value: " + ownedField.getSellValue() + ".";
             }
         }
         if (isInJail()) {
             stats += "\n\n|" + "TURNS LEFT IN JAIL" + "|";
-            stats += "\n" + turnsLeftInJail + ".";
+            stats += "\n" + turnsLeftInJail;
         }
         if (showTotalPlayerValue) {
             stats += "\n\n|" + "TOTAL SCORE" + "|";
