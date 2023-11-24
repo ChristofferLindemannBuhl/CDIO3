@@ -57,10 +57,14 @@ public class Player {
         return position;
     }
     public void setPosition(int newPlayerPosition) {
+        if (newPlayerPosition < position)
+            passedStart();
         // Kør logik for at spilleren bevæger sig
         processPlayerMovement(newPlayerPosition);
     }
     public void move(int amountToMove) {
+        if (position + amountToMove > Dicegame.NO_OF_FIELDS)
+            passedStart();
         int newPlayerPosition = (position + amountToMove) % Dicegame.NO_OF_FIELDS;
         // Kør logik for at spilleren bevæger sig
         processPlayerMovement(newPlayerPosition);
@@ -70,18 +74,15 @@ public class Player {
         int oldPlayerPosition = position;
         // Placér spilleren på den nye position
         position = newPlayerPosition;
-        // Tjek om spilleren passerede start
-        validateIfPassedStart(oldPlayerPosition, newPlayerPosition);
 
         Game.board.updatePlayerPositions(); // Opdatér board-interface
         Game.print(Game.board.toString()); // Printer boardet
+        Game.showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
         Game.board.runFieldLogic(this); // Kør logikken for det felt spilleren landede på
     }
 
-    private void validateIfPassedStart(int oldPlayerPosition, int newPlayerPosition) {
-        if (newPlayerPosition < oldPlayerPosition) { // Hvis den nye position er mindre end den gamle, vil det sige, at spilleren har passeret starten.
-            wallet.addMoney(Dicegame.MONEY_FOR_PASSING_START);
-        }
+    private void passedStart() {
+        wallet.addMoney(Dicegame.MONEY_FOR_PASSING_START);
     }
 
     public boolean isInJail() {

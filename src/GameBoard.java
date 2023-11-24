@@ -9,300 +9,244 @@ class GameBoard{
         Størrelsen på boardet skal justeres til at håndtere 4 spillere
      */
 
-    private char[][] board;
+    private String[][] board;
     private List<Field> fieldList = new ArrayList<>();
 
     public GameBoard() {
-        this.board = new char[Dicegame.NO_OF_FIELDS][Dicegame.NO_OF_PLAYERS];
+        this.board = new String[Dicegame.NO_OF_FIELDS][Dicegame.MAX_NO_OF_PLAYERS];
         initializeBoard();
     }
 
     private void initializeBoard() {
         // Sætter alle felterne tomme
         for (int i = 0; i < Dicegame.NO_OF_FIELDS; i++) {
-            for (int j = 0; j < Dicegame.NO_OF_PLAYERS; j++) {
-                board[i][j] = ' ';
+            for (int j = 0; j < Dicegame.MAX_NO_OF_PLAYERS; j++) {
+                board[i][j] = " ";
             }
         }
-        //Player starts here
+
+        // Player starts here
         for (int j = 0; j < Dicegame.NO_OF_PLAYERS; j++) {
             board[0][j] = getPlayerSymbol(j);
         }
+
         //Field attributes
         int spaceIndex = 0;
         fieldList.add(new StartField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Burgerbaren", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Burger Café", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Pizzeriaet", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Pizzeria", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Slikbutikken", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Candy Shop", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Iskiosken", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Ice Cream Shop", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new JailField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Museet", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Museum", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Biblioteket", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Library", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Skaterparken", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Skate Park", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Swimmingpoolen", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Swimming Pool", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new ParkingField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Spillehallen", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Arcade", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Biografen", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Cinema", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Legetøjsbutikken", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Toy Store", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Dyrehandlen", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Pet Store", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new GoToJailField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Bowlinghallen", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Bowling alley", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Zoologisk Have", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Zoo", 0, 0, 0));
         spaceIndex++;
         fieldList.add(new ChanceField(spaceIndex));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Vandlandet", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Water Park", 0, 0, 0));
         spaceIndex++;
-        fieldList.add(new BuyableField(spaceIndex, "Strandpromenaden", 0, 0, 0));
+        fieldList.add(new BuyableField(spaceIndex, "Beach", 0, 0, 0));
     }
 
     public String toString(){
-        String boardInterfaceString = "";
-
         switch (Dicegame.NO_OF_PLAYERS) {
             case 2:
-                //Adding top outline with corners
-                boardInterfaceString += 'X';
-                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
+                for (int f = 0; f < Dicegame.NO_OF_FIELDS; f++) {
+                    board[f][2] = " ";
+                    board[f][3] = " ";
                 }
-                boardInterfaceString += "X\n";
-                
-                // Adds first top row
-                boardInterfaceString += '|';
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds Second top row
-                boardInterfaceString += "\n|";
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += " " + "" + " " + "|";
-                }
-
-                //Adding the middle line by line
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                boardInterfaceString += "\n|" + this.board[23][0] + "" + this.board[23][1] + "|              |" + this.board[7][0] + "" + this.board[7][1] + "|";
-                boardInterfaceString += "\n|" + " " + "" + " " + "|              |" + " " + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[22][0] + "" + this.board[22][1] + "|              |" + this.board[8][0] + "" + this.board[8][1] + "|";
-                boardInterfaceString += "\n|" + " " + "" + " " + "|              |" + " " + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[21][0] + "" + this.board[21][1] + "|              |" + this.board[9][0] + "" + this.board[9][1] + "|";
-                boardInterfaceString += "\n|" + " " + "" + " " + "|              |" + " " + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[20][0] + "" + this.board[20][1] + "|              |" + this.board[10][0] + "" + this.board[10][1] + "|";
-                boardInterfaceString += "\n|" + " " + "" + " " + "|              |" + " " + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[11][1] + "|";
-                boardInterfaceString += "\n|" + " " + "" + " " + "|              |" + " " + "" + " " + "|";
-                
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                // Adds first bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds second bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += " " + "" + " " + "|";
-                }
-
-                //Adding bottom outline with corners
-                boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
-                }
-                boardInterfaceString += "X";
                 break;
-            
             case 3:
-
-                //Adding top outline with corners
-                boardInterfaceString += 'X';
-                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
+                for (int f = 0; f < Dicegame.NO_OF_FIELDS; f++) {
+                    board[f][3] = " ";
                 }
-                boardInterfaceString += "X\n";
-                
-                // Adds first top row
-                boardInterfaceString += '|';
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds Second top row
-                boardInterfaceString += "\n|";
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += this.board[i][2] + "" + " " + "|";
-                }
-
-                //Adding the middle line by line
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                boardInterfaceString += "\n|" + this.board[23][0] + "" + this.board[23][1] + "|              |" + this.board[7][0] + "" + this.board[7][1] + "|";
-                boardInterfaceString += "\n|" + this.board[23][2] + "" + " " + "|              |" + this.board[7][2] + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[22][0] + "" + this.board[22][1] + "|              |" + this.board[8][0] + "" + this.board[8][1] + "|";
-                boardInterfaceString += "\n|" + this.board[22][2] + "" + " " + "|              |" + this.board[8][2] + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[21][0] + "" + this.board[21][1] + "|              |" + this.board[9][0] + "" + this.board[9][1] + "|";
-                boardInterfaceString += "\n|" + this.board[21][2] + "" + " " + "|              |" + this.board[9][2] + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[20][0] + "" + this.board[20][1] + "|              |" + this.board[10][0] + "" + this.board[10][1] + "|";
-                boardInterfaceString += "\n|" + this.board[20][2] + "" + " " + "|              |" + this.board[10][2] + "" + " " + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[11][1] + "|";
-                boardInterfaceString += "\n|" + this.board[19][2] + "" + " " + "|              |" + this.board[11][2] + "" + " " + "|";
-                
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                // Adds first bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds second bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += this.board[i][2] + "" + " " + "|";
-                }
-
-                //Adding bottom outline with corners
-                boardInterfaceString += "\nX";
-                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
-                }
-                boardInterfaceString += "X";
-                break;
-
-            case 4:
-
-                //Adding top outline with corners
-                boardInterfaceString += 'X';
-                for(int i = 0; i < 3 * Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
-                }
-                boardInterfaceString += "X\n";
-                
-                // Adds first top row
-                boardInterfaceString += '|';
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds Second top row
-                boardInterfaceString += "\n|";
-                for (int i = 0; i < Dicegame.BOARD_WIDTH; i++) {
-                    boardInterfaceString += this.board[i][2] + "" + this.board[i][3] + "|";
-                }
-
-                //Adding the middle line by line
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                boardInterfaceString += "\n|" + this.board[23][0] + "" + this.board[23][1] + "|              |" + this.board[7][0] + "" + this.board[7][1] + "|";
-                boardInterfaceString += "\n|" + this.board[23][2] + "" + this.board[23][3] + "|              |" + this.board[7][2] + "" + this.board[7][3] + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[22][0] + "" + this.board[22][1] + "|              |" + this.board[8][0] + "" + this.board[8][1] + "|";
-                boardInterfaceString += "\n|" + this.board[22][2] + "" + this.board[22][3] + "|              |" + this.board[8][2] + "" + this.board[8][3] + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[21][0] + "" + this.board[21][1] + "|              |" + this.board[9][0] + "" + this.board[9][1] + "|";
-                boardInterfaceString += "\n|" + this.board[21][2] + "" + this.board[21][3] + "|              |" + this.board[9][2] + "" + this.board[9][3] + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[20][0] + "" + this.board[20][1] + "|              |" + this.board[10][0] + "" + this.board[10][1] + "|";
-                boardInterfaceString += "\n|" + this.board[20][2] + "" + this.board[20][3] + "|              |" + this.board[10][2] + "" + this.board[10][3] + "|";
-                boardInterfaceString += "\n|--|              |--|";
-
-                boardInterfaceString += "\n|" + this.board[19][0] + "" + this.board[19][1] + "|              |" + this.board[11][0] + "" + this.board[11][1] + "|";
-                boardInterfaceString += "\n|" + this.board[19][2] + "" + this.board[19][3] + "|              |" + this.board[11][2] + "" + this.board[11][3] + "|";
-                
-
-                boardInterfaceString += "\n|--x--------------x--|";
-
-                // Adds first bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += this.board[i][0] + "" + this.board[i][1] + "|";
-                }
-
-                // Adds second bottom row
-                boardInterfaceString += "\n|";
-                for (int i = 18; i >= 12; i--) {
-                    boardInterfaceString += this.board[i][2] + "" + this.board[i][3] + "|";
-                }
-
-                //Adding bottom outline with corners
-                boardInterfaceString += "\nX";
-                for(int i = 0; i < 3*Dicegame.BOARD_WIDTH - 1; i++){
-                    boardInterfaceString += '-';
-                }
-                boardInterfaceString += "X";
-                break;
-        
-            default:
-                boardInterfaceString = "Error";
                 break;
         }
 
-        return boardInterfaceString;
+        indexerCount = 0;
+        cellFieldCount = 0;
+        lastCellRowCounter = 0;
+
+        StringBuilder boardMap = new StringBuilder();
+        boardMap.append("X-------x-------x-------x-------x-------x-------x-------X"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x-------x-------x-------x-------x-------x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x                                       x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |                                       | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("x-------x-------x-------x-------x-------x-------x-------x"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("| " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " | " + playerPositionIndexer() + "   " + playerPositionIndexer() + " |"); boardMap.append("\n");
+        boardMap.append("X-------x-------x-------x-------x-------x-------x-------X"); boardMap.append("\n");
+
+        return boardMap.toString();
     }
 
+    int indexerCount = 0;
+    int cellFieldCount = 0;
+    double lastCellRowCounter = 0;
+    private String playerPositionIndexer() {
+        int fieldIndex = 0;
+        int cellField = (int)Math.floor(cellFieldCount / 2.0); // 0 eller 1
+
+        if (indexerCount < 28) {        // cell 1
+            fieldIndex = (int)Math.floor((indexerCount % 14) / 2.0);
+        } else if (indexerCount < 36) { // cell 2
+            switch (cellField) {
+                case 0:
+                    fieldIndex = 23;
+                    break;
+                case 1:
+                    fieldIndex = 7;
+                    break;
+            }
+        } else if (indexerCount < 44) { // cell 3
+            switch (cellField) {
+                case 0:
+                    fieldIndex = 22;
+                    break;
+                case 1:
+                    fieldIndex = 8;
+                    break;
+            }
+        } else if (indexerCount < 52) { // cell 4
+            switch (cellField) {
+                case 0:
+                    fieldIndex = 21;
+                    break;
+                case 1:
+                    fieldIndex = 9;
+                    break;
+            }
+        } else if (indexerCount < 60) { // cell 5
+            switch (cellField) {
+                case 0:
+                    fieldIndex = 20;
+                    break;
+                case 1:
+                    fieldIndex = 10;
+                    break;
+            }
+        } else if (indexerCount < 68) { // cell 6
+            switch (cellField) {
+                case 0:
+                    fieldIndex = 19;
+                    break;
+                case 1:
+                    fieldIndex = 11;
+                    break;
+            }
+        } else if (indexerCount < 96) { // cell 7
+            fieldIndex = 18 - ((int)Math.floor(lastCellRowCounter));
+            lastCellRowCounter += 0.5;
+            if (lastCellRowCounter >= 7)
+                lastCellRowCounter = 0;
+        }
+
+        if (indexerCount >= 28 && indexerCount < 68) {
+            cellFieldCount++;
+        }
+
+        String mapSymbol = "";
+        if (indexerCount < 14) {        // cell 1
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)]; // Player 1 og 2
+        } else if (indexerCount < 28) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2]; // Player 3 og 4
+        } else if (indexerCount < 32) { // cell 2
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else if (indexerCount < 36) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        } else if (indexerCount < 40) { // cell 3
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else if (indexerCount < 44) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        } else if (indexerCount < 48) { // cell 4
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else if (indexerCount < 52) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        } else if (indexerCount < 56) { // cell 5
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else if (indexerCount < 60) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        } else if (indexerCount < 64) { // cell 6
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else if (indexerCount < 68) {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        } else if (indexerCount < 82) { // cell 7
+            mapSymbol = board[fieldIndex][((indexerCount) % 2)];
+        } else {
+            mapSymbol = board[fieldIndex][((indexerCount) % 2) + 2];
+        }
+
+        //Game.print("cellfield " + cellField + ", at " + indexerCount + ", has fieldindex: " + fieldIndex);
+
+        indexerCount++;
+        if (indexerCount > 96) {
+            indexerCount = 0;
+            lastCellRowCounter = 0;
+        }
+        if (cellFieldCount > 3)
+            cellFieldCount = 0;
+
+        return mapSymbol;
+    }
 
     public void updatePlayerPositions() {
         Player[] players = Game.getPlayers();
         // Nulstil board
         for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
             for (int f = 0; f < Dicegame.NO_OF_FIELDS; f++) {
-                board[f][p] = ' '; // Symbolet er spillerens ID konverteret til en char
+                board[f][p] = " "; // Symbolet er spillerens ID konverteret til en char
             }
         }
         // Indsæt spiller-positioner
         for (int p = 0; p < Dicegame.NO_OF_PLAYERS; p++) {
-            board[players[p].getPosition()][p] = (char)((players[p].getID() + 1) + '0'); // Symbolet er spillerens ID konverteret til en char
+            board[players[p].getPosition()][p] = getPlayerSymbol(players[p].getID());
         }
     }
 
@@ -311,15 +255,14 @@ class GameBoard{
         for (Field field : fieldList) {
             if (field.getSpace() == currentPlayer.getPosition()) {
                 field.landingLogic(currentPlayer);
+                break; // Skal break, ellers opstår der en bug, hvor der bliver fundet to spaces der matcher spillerens position når spilleren lander på en chance der rykker dem til et andet felt.
             }
         }
     }
-  
 
-    private char getPlayerSymbol(int playerIndex) {
-        char[] playerSymbols = {'1', '2', '3', '4'};
-        return playerSymbols[playerIndex];
+    private String getPlayerSymbol(int playerIndex) {
+        /*String[] playerSymbols = {"1", "2", "3", "4"};
+        return playerSymbols[playerIndex];*/
+        return String.valueOf(Game.getPlayers()[playerIndex].getName().charAt(0));
     }
-
 }
-

@@ -29,54 +29,63 @@ public class Game {
 
     public void initializeGame() {
         // runTest();
+        scanner = new java.util.Scanner(System.in);
         initializePlayers();
         board = new GameBoard();
         startGame();
     }
 
     private void initializePlayers() {
-        while (true) {
-            print("\nEnter the number of players (2-4):\n");
-            scanner = new java.util.Scanner(System.in);
-            String input = scanner.nextLine();
+        boolean testing = false;
 
-            System.out.println("\nYou typed '" +input +"' type 'y' to confirm and 'n' to reset\n");
-            
-            String newInput = scanner.nextLine();
-
-            if (newInput.equals("y")){
-                int number = Integer.parseInt(input);
-                Dicegame.NO_OF_PLAYERS = number;
-                if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
-                    break; // Break out of the loop if the number of players is valid
-                } else {
-                    print("Invalid number of players. Please enter a number between 2 and 4.\n");
+        if (!testing) {
+            while (true) {
+                print("\nEnter the number of players (2-4):\n");
+                String input = scanner.nextLine();
+                System.out.println("\nYou typed '" + input + "' type 'y' to confirm and 'n' to reset\n");
+                String newInput = scanner.nextLine();
+                if (newInput.equals("y")) {
+                    int number = Integer.parseInt(input);
+                    Dicegame.NO_OF_PLAYERS = number;
+                    if (Dicegame.NO_OF_PLAYERS >= 2 && Dicegame.NO_OF_PLAYERS <= 4) {
+                        break; // Break out of the loop if the number of players is valid
+                    } else {
+                        print("Invalid number of players. Please enter a number between 2 and 4.\n");
+                    }
                 }
             }
-        }
 
-        switch (Dicegame.NO_OF_PLAYERS) {
-            case 2:
-                Dicegame.START_MONEY = 20;
-                break;
+            switch (Dicegame.NO_OF_PLAYERS) {
+                case 2:
+                    Dicegame.START_MONEY = 20;
+                    break;
 
-            case 3:
-                Dicegame.START_MONEY = 18;
-                break;
+                case 3:
+                    Dicegame.START_MONEY = 18;
+                    break;
 
-            case 4:
-                Dicegame.START_MONEY = 16;
-                break;
-        }
+                case 4:
+                    Dicegame.START_MONEY = 16;
+                    break;
+            }
 
-        players = new Player[Dicegame.NO_OF_PLAYERS];
-        for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
-            print("\nPlease enter the name for Player " + (i + 1) + ".");
-            players[i] = new Player(scanner.nextLine(), i);
+            players = new Player[Dicegame.NO_OF_PLAYERS];
+            for (int i = 0; i < Dicegame.NO_OF_PLAYERS; i++) {
+                print("\nPlease enter the name for Player " + (i + 1) + ".");
+                players[i] = new Player(scanner.nextLine(), i);
+            }
+        } else {
+            Dicegame.NO_OF_PLAYERS = 2;
+            Dicegame.START_MONEY = 20;
+            players = new Player[Dicegame.NO_OF_PLAYERS];
+            players[0] = new Player("Marlene", 0);
+            players[1] = new Player("Katrine", 1);
         }
     }
 
     private void startGame() {
+        board.updatePlayerPositions();
+        print(board.toString());
         takePlayerTurn();
     }
 
@@ -92,7 +101,7 @@ public class Game {
             print("Type 'r' to roll the dice.");
             waitForRollInput(); // Her venter koden til spilleren har givet inputet 'roll'.
             // Der er nu blevet rullet med terninger.
-            showPlayerRoll(); // Vi viser hvad spilleren har slået i konsollen.
+
             currentPlayer.move(currentPlayer.getSumOfDice());
             playerStats(); //Printer spillers penge osv
             if (checkGameEndingConditions()) { // Hvis
@@ -117,33 +126,29 @@ public class Game {
 
     }
 
-    private void showPlayerRoll() {
-        String diceValuesString = new String();
+    public static void showPlayerRoll() {
+        /*String diceValuesString = new String();
         for (int i = 0; i < Dicegame.NO_OF_DICE; i++) {
-            if (i > 0)
+            if (i > 0) {
                 diceValuesString += "\n";
+            }
             diceValuesString += "Dice " + (i + 1) + ": " + currentPlayer.getDieValue(i);
         }
-        print("\n" + diceValuesString);
-        print("Dice Sum: " + currentPlayer.getSumOfDice() + "\n");
+        print("\n" + diceValuesString);*/
+
+        print("Roll: " + currentPlayer.getSumOfDice());
     }
 
     private void playerStats() {
         // Vis spillerens stats
-        /*
-        print(currentPlayer.getPlayerName() + ", you now have " + currentPlayer.wallet().getMoney() + " money.");
-        */
+        print("\nYou now have $" + currentPlayer.wallet().getMoney());
     }
 
     private boolean checkGameEndingConditions() {
         // Check om spilleren har vundet
         boolean playerWon = false;
-
-        /*
-        if (currentPlayer.checkForMoneyToWin())
-            playerWon = true;
-        */
-
+        /* if (currentPlayer.checkForMoneyToWin())
+            playerWon = true; */
         return playerWon;
     }
 
