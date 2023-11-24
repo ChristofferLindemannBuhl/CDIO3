@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -266,7 +265,6 @@ class ChanceField extends Field {
         int cardValue = random.nextInt(Dicegame.NO_OF_CHANCE_CARDS) + 1;
         // Variables
         var currentPlayer = Game.getCurrentPlayer();
-        int playerInput;
 
         System.out.println("\nChance card:");
 

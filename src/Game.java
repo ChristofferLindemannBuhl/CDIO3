@@ -218,7 +218,7 @@ public class Game {
             return false;
         }
         try {
-            int number = Integer.parseInt(strNum);
+            Integer.parseInt(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }

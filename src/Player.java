@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +102,6 @@ public class Player {
     }
 
     private void processPlayerMovement(int newPlayerPosition) {
-        int oldPlayerPosition = position;
         // Placér spilleren på den nye position
         position = newPlayerPosition;
 
