@@ -36,7 +36,7 @@ public class Game {
     }
 
     private void initializePlayers() {
-        boolean testing = true;
+        boolean testing = false;
 
         if (!testing) {
             while (true) {
