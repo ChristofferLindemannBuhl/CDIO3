@@ -91,6 +91,8 @@ public class Game {
     private void takePlayerTurn() { // Alt hvad der sker på en tur, sker her fra. Rækkefølgen af handlinger i en tur skal styres her fra.
         currentPlayer = players[playerTurn];
         print("\n" + " ---------- " + currentPlayer.getName() + "'s turn" + " ----------");
+        print("Your Wallet: "+ currentPlayer.wallet().getMoney()+"\n");
+
 
         if (currentPlayer.isInJail()) {
             // Spilleren er i fængsel
